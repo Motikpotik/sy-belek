@@ -107,8 +107,8 @@
     padding: 16px 24px; border-radius: 14px;
     border: 1px solid rgba(212,175,55,0.25);
   }
-  .hero-stat strong { color: #d4af37; font-size: 2em; font-weight: 900; display: block; line-height: 1; }
-  .hero-stat span { font-size: 0.76em; opacity: 0.75; text-transform: uppercase; letter-spacing: 1.5px; }
+  .hero-stat strong { color: #d4af37; font-size: 2em; font-weight: 900; display: block; line-height: 1; margin-bottom: 6px; }
+  .hero-stat span { display: block; font-size: 0.76em; opacity: 0.75; text-transform: uppercase; letter-spacing: 1.5px; line-height: 1.3; }
 
   /* ========== CONTAINER ========== */
   .container { max-width: 1320px; margin: 0 auto; padding: 0 20px; }
@@ -155,9 +155,9 @@
     font-size: 2.4em; font-weight: 900;
     background: linear-gradient(135deg, #d4af37, #f5b700);
     -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-    display: block; line-height: 1; margin-bottom: 5px;
+    display: block; line-height: 1; margin-bottom: 8px;
   }
-  .rating-label { color: rgba(232,232,239,0.6); font-size: 0.72em; text-transform: uppercase; letter-spacing: 1.3px; font-weight: 600; }
+  .rating-label { display: block; color: rgba(232,232,239,0.6); font-size: 0.72em; text-transform: uppercase; letter-spacing: 1.3px; font-weight: 600; line-height: 1.3; }
 
   /* ========== GALLERY ========== */
   .gallery {
@@ -379,14 +379,14 @@
     border-color: rgba(212,175,55,0.5);
     box-shadow: 0 15px 40px rgba(212,175,55,0.25);
   }
-  .month-name { font-weight: 800; font-size: 0.95em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1.5px; }
-  .month-icon { font-size: 2em; margin: 5px 0; }
+  .month-name { display: block; font-weight: 800; font-size: 0.95em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1.5px; }
+  .month-icon { display: block; font-size: 2em; margin: 5px 0; }
   .month-temp {
-    font-size: 1.4em; font-weight: 900;
+    display: block; font-size: 1.4em; font-weight: 900; margin-bottom: 4px;
     background: linear-gradient(135deg, #d4af37, #f5b700);
     -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   }
-  .month-water { color: rgba(0,184,212,0.9); font-size: 0.8em; margin-top: 3px; }
+  .month-water { display: block; color: rgba(0,184,212,0.9); font-size: 0.8em; margin-top: 3px; margin-bottom: 5px; }
   .season-badge {
     display: inline-block; padding: 3px 8px; border-radius: 100px;
     font-size: 0.62em; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px;
@@ -1119,6 +1119,272 @@
   .contact-info strong { display: block; color: #f5f5fa; font-size: 0.92em; }
   .contact-info span { color: rgba(232,232,239,0.65); font-size: 0.82em; }
   .contact-info a { color: #d4af37; }
+
+  /* ---------- 33. Pie chart распределения оценок ---------- */
+  .rating-distribution {
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 24px; align-items: center;
+    margin-top: 18px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 14px; padding: 22px;
+  }
+  @media (max-width: 640px) {
+    .rating-distribution { grid-template-columns: 1fr; }
+  }
+  .pie-wrap { display: flex; justify-content: center; }
+  .pie {
+    width: 180px; height: 180px; border-radius: 50%;
+    background: conic-gradient(
+      #7eea9e 0% 70%,
+      #ffd97e 70% 86.7%,
+      #ff8a8a 86.7% 91.7%,
+      #ff8a8a 91.7% 93.8%,
+      #ff8a8a 93.8% 100%
+    );
+    position: relative;
+    box-shadow: 0 0 30px rgba(212,175,55,0.3);
+    animation: pieIn 1.2s cubic-bezier(.2,.7,.2,1);
+  }
+  @keyframes pieIn { from { transform: scale(0.5) rotate(-180deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
+  .pie::after {
+    content: '4.3/5'; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 110px; height: 110px; border-radius: 50%;
+    background: linear-gradient(135deg, #14142a, #1a1a35);
+    display: flex; align-items: center; justify-content: center;
+    color: #d4af37; font-weight: 900; font-size: 1.4em;
+    border: 2px solid rgba(212,175,55,0.4);
+  }
+  .pie-legend { display: flex; flex-direction: column; gap: 8px; }
+  .pie-legend-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.88em;
+  }
+  .pie-legend-item .dot {
+    width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
+  }
+  .pie-legend-item .dot.green  { background: #7eea9e; }
+  .pie-legend-item .dot.yellow { background: #ffd97e; }
+  .pie-legend-item .dot.orange { background: #ffa97e; }
+  .pie-legend-item .dot.red    { background: #ff8a8a; }
+  .pie-legend-item .dot.darkred { background: #b94545; }
+  .pie-legend-item .stars { color: #d4af37; font-weight: 700; min-width: 36px; }
+  .pie-legend-item .count { color: rgba(232,232,239,0.65); margin-left: auto; }
+  .pie-legend-item .bar {
+    flex: 1; max-width: 80px; height: 6px;
+    background: rgba(255,255,255,0.1); border-radius: 100px; overflow: hidden;
+  }
+  .pie-legend-item .bar-fill {
+    height: 100%; border-radius: 100px;
+    transition: width 1.5s cubic-bezier(.2,.7,.2,1);
+    width: 0;
+  }
+
+  /* ---------- 34. Week schedule (расписание недели) ---------- */
+  .week-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px; margin-top: 18px;
+  }
+  .day-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 12px; overflow: hidden;
+    transition: 0.3s;
+  }
+  .day-card:hover {
+    border-color: rgba(212,175,55,0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(212,175,55,0.2);
+  }
+  .day-card.today {
+    border-color: rgba(212,175,55,0.7);
+    box-shadow: 0 0 0 2px rgba(212,175,55,0.5);
+    background: rgba(212,175,55,0.06);
+  }
+  .day-header {
+    padding: 12px 14px;
+    background: linear-gradient(135deg, rgba(212,175,55,0.18), rgba(245,183,0,0.08));
+    border-bottom: 1px solid rgba(212,175,55,0.2);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .day-name { color: #d4af37; font-weight: 800; font-size: 1em; }
+  .day-badge {
+    font-size: 0.65em; padding: 2px 8px; border-radius: 100px;
+    background: rgba(212,175,55,0.3); color: #fff5b7; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .day-body { padding: 10px 14px; }
+  .day-event {
+    display: flex; gap: 10px; padding: 6px 0;
+    border-bottom: 1px dashed rgba(212,175,55,0.1);
+    font-size: 0.84em;
+  }
+  .day-event:last-child { border-bottom: none; }
+  .day-event .time {
+    color: #d4af37; font-weight: 700; min-width: 42px; flex-shrink: 0;
+  }
+  .day-event .title { color: rgba(232,232,239,0.85); }
+  .day-event .emoji { margin-right: 4px; }
+
+  /* ---------- 35. Kids zone (детский раздел) ---------- */
+  .kids-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px; margin-top: 18px;
+  }
+  .kids-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(212,175,55,0.03));
+    border: 1px solid rgba(212,175,55,0.25);
+    border-radius: 16px; padding: 18px;
+    transition: 0.3s; position: relative; overflow: hidden;
+  }
+  .kids-card::before {
+    content: ''; position: absolute; top: -20px; right: -20px;
+    width: 80px; height: 80px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,175,55,0.2), transparent 70%);
+  }
+  .kids-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212,175,55,0.5);
+    box-shadow: 0 12px 30px rgba(212,175,55,0.2);
+  }
+  .kids-emoji { font-size: 2.4em; margin-bottom: 8px; display: block; }
+  .kids-card h4 { color: #d4af37; font-size: 1.05em; margin-bottom: 8px; }
+  .kids-card p { color: rgba(232,232,239,0.8); font-size: 0.86em; line-height: 1.5; }
+  .kids-card ul { list-style: none; margin-top: 8px; }
+  .kids-card li {
+    padding: 4px 0 4px 22px; position: relative;
+    color: rgba(232,232,239,0.8); font-size: 0.84em; line-height: 1.4;
+  }
+  .kids-card li::before { content: '🎨'; position: absolute; left: 0; top: 4px; font-size: 0.9em; }
+
+  /* ---------- 36. Search modal ---------- */
+  .search-trigger {
+    position: fixed; top: 14px; right: 14px; z-index: 110;
+    background: rgba(212,175,55,0.15);
+    border: 1px solid rgba(212,175,55,0.4);
+    color: #d4af37; padding: 8px 14px; border-radius: 100px;
+    font-size: 0.85em; font-weight: 600; font-family: inherit;
+    cursor: pointer; transition: 0.3s;
+    display: inline-flex; align-items: center; gap: 6px;
+    backdrop-filter: blur(10px);
+  }
+  .search-trigger:hover {
+    background: rgba(212,175,55,0.3);
+    transform: scale(1.05);
+  }
+  .search-trigger kbd {
+    background: rgba(0,0,0,0.4); padding: 1px 6px; border-radius: 4px;
+    font-size: 0.85em; font-family: monospace; border: 1px solid rgba(212,175,55,0.3);
+  }
+  .search-modal {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+    align-items: flex-start; justify-content: center;
+    padding-top: 10vh;
+  }
+  .search-modal.active { display: flex; animation: fadeIn 0.2s; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .search-box {
+    width: 90%; max-width: 600px;
+    background: linear-gradient(135deg, #14142a, #1a1a35);
+    border: 1px solid rgba(212,175,55,0.4);
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(212,175,55,0.3);
+  }
+  .search-input-wrap {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 20px; border-bottom: 1px solid rgba(212,175,55,0.2);
+  }
+  .search-input-wrap input {
+    flex: 1; background: transparent; border: none; outline: none;
+    color: #f5f5fa; font-size: 1.05em; font-family: inherit;
+  }
+  .search-input-wrap input::placeholder { color: rgba(232,232,239,0.4); }
+  .search-input-wrap .icon { color: #d4af37; font-size: 1.2em; }
+  .search-input-wrap .esc {
+    background: rgba(0,0,0,0.4); padding: 3px 8px; border-radius: 6px;
+    font-size: 0.75em; color: rgba(232,232,239,0.6); font-family: monospace;
+    border: 1px solid rgba(212,175,55,0.2);
+  }
+  .search-results {
+    max-height: 50vh; overflow-y: auto;
+  }
+  .search-result {
+    padding: 12px 20px; cursor: pointer; transition: 0.2s;
+    border-bottom: 1px solid rgba(212,175,55,0.08);
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .search-result:hover, .search-result.active {
+    background: rgba(212,175,55,0.1);
+  }
+  .search-result .res-emoji { font-size: 1.4em; flex-shrink: 0; }
+  .search-result .res-info strong { display: block; color: #f5f5fa; font-size: 0.95em; }
+  .search-result .res-info span { color: rgba(232,232,239,0.6); font-size: 0.82em; }
+  .search-result mark {
+    background: rgba(212,175,55,0.3); color: #fff5b7;
+    padding: 0 2px; border-radius: 2px;
+  }
+  .search-empty { padding: 30px 20px; text-align: center; color: rgba(232,232,239,0.5); }
+
+  /* ---------- 37. Favorite button ---------- */
+  .fav-btn {
+    position: absolute; top: 10px; right: 10px; z-index: 5;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
+    border: 1px solid rgba(212,175,55,0.4);
+    color: rgba(232,232,239,0.5); font-size: 1.1em;
+    cursor: pointer; transition: 0.3s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .fav-btn:hover { transform: scale(1.15); border-color: rgba(212,175,55,0.8); }
+  .fav-btn.active {
+    color: #f5b700;
+    background: rgba(245,183,0,0.2);
+    border-color: rgba(245,183,0,0.7);
+    box-shadow: 0 0 14px rgba(245,183,0,0.5);
+  }
+  .fav-btn.active::before { content: '★'; }
+  .fav-btn:not(.active)::before { content: '☆'; }
+
+  /* ---------- 38. Currency converter ---------- */
+  .currency-wrap {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 14px; padding: 18px;
+    margin-top: 18px; max-width: 500px; margin-left: auto; margin-right: auto;
+  }
+  .currency-row {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center;
+  }
+  .currency-input-wrap { display: flex; flex-direction: column; gap: 6px; }
+  .currency-input-wrap label {
+    font-size: 0.72em; color: rgba(232,232,239,0.5);
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .currency-input-wrap input, .currency-input-wrap select {
+    background: rgba(0,0,0,0.3); border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 8px; padding: 10px 12px;
+    color: #f5f5fa; font-size: 1em; font-family: inherit; outline: none;
+    transition: 0.3s;
+  }
+  .currency-input-wrap input:focus, .currency-input-wrap select:focus {
+    border-color: rgba(212,175,55,0.6);
+    box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
+  }
+  .currency-input-wrap select {
+    cursor: pointer; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23d4af37' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 10px center;
+    padding-right: 30px;
+  }
+  .currency-arrow {
+    color: #d4af37; font-size: 1.4em; padding-top: 18px;
+  }
+  .currency-rate {
+    margin-top: 10px; text-align: center;
+    font-size: 0.78em; color: rgba(232,232,239,0.5);
+  }
+  .currency-rate strong { color: #d4af37; }
 </style>
 </head>
 <body>
@@ -1254,8 +1520,11 @@
 <button aria-controls="panel-market" aria-selected="false" class="tab-btn" data-tab="market" role="tab">🛒 Рынок</button>
 <button aria-controls="panel-excursions" aria-selected="false" class="tab-btn" data-tab="excursions" role="tab">🗺 Экскурсии</button>
 <button aria-controls="panel-lifehacks" aria-selected="false" class="tab-btn" data-tab="lifehacks" role="tab">💡 Лайфхаки</button>
+<button aria-controls="panel-week" aria-selected="false" class="tab-btn" data-tab="week" role="tab">📅 Неделя</button>
+<button aria-controls="panel-kids" aria-selected="false" class="tab-btn" data-tab="kids" role="tab">👶 Детям</button>
 </div>
 </div>
+<button aria-label="Поиск" class="search-trigger" id="searchTrigger" title="Поиск по сайту (Ctrl+K)">🔍<kbd>⌘K</kbd></button>
 </nav>
 <main>
 <!-- ==================== TAB 1: OVERVIEW ==================== -->
@@ -1831,7 +2100,46 @@
 <div class="panel-section">
 <h2 class="section-title reveal">💬 Отзывы реальных гостей</h2>
 <p class="subtitle reveal">TripAdvisor 4.3/5 (240 отзывов, Travelers' Choice 2026) • отзывы локализованы на русский</p>
-<div aria-label="Фильтр отзывов по звёздам" class="sub-tabs" role="tablist">
+
+<div class="rating-distribution reveal-scale">
+<div class="pie-wrap">
+<div class="pie" title="Распределение оценок TripAdvisor"></div>
+</div>
+<div class="pie-legend">
+<div class="pie-legend-item">
+<span class="dot green"></span>
+<span class="stars">★★★★★</span>
+<div class="bar"><div class="bar-fill" data-value="70" style="background:#7eea9e"></div></div>
+<span class="count">168 отзывов (70%)</span>
+</div>
+<div class="pie-legend-item">
+<span class="dot yellow"></span>
+<span class="stars">★★★★☆</span>
+<div class="bar"><div class="bar-fill" data-value="16.7" style="background:#ffd97e"></div></div>
+<span class="count">40 отзывов (16.7%)</span>
+</div>
+<div class="pie-legend-item">
+<span class="dot orange"></span>
+<span class="stars">★★★☆☆</span>
+<div class="bar"><div class="bar-fill" data-value="5" style="background:#ffa97e"></div></div>
+<span class="count">12 отзывов (5%)</span>
+</div>
+<div class="pie-legend-item">
+<span class="dot red"></span>
+<span class="stars">★★☆☆☆</span>
+<div class="bar"><div class="bar-fill" data-value="2.1" style="background:#ff8a8a"></div></div>
+<span class="count">5 отзывов (2.1%)</span>
+</div>
+<div class="pie-legend-item">
+<span class="dot darkred"></span>
+<span class="stars">★☆☆☆☆</span>
+<div class="bar"><div class="bar-fill" data-value="6.2" style="background:#b94545"></div></div>
+<span class="count">15 отзывов (6.2%)</span>
+</div>
+</div>
+</div>
+
+<div aria-label="Фильтр отзывов по звёздам" class="sub-tabs" role="tablist" style="margin-top: 24px;">
 <button aria-selected="true" class="sub-tab active" data-filter="all" role="tab">Все (8)</button>
 <button aria-selected="false" class="sub-tab" data-filter="5" role="tab">★ 5 (5)</button>
 <button aria-selected="false" class="sub-tab" data-filter="4" role="tab">★ 4 (2)</button>
@@ -2788,14 +3096,381 @@
 
 <div class="accordion pros reveal"><div aria-expanded="false" class="accordion-header" role="button" tabindex="0"><span>Нужен ли адаптер для розеток?</span><span class="accordion-icon">+</span></div><div class="accordion-content"><div class="accordion-body"><strong>Обычно нет.</strong> Турецкие розетки — Type F (как в России/Европе), 220V. Но в некоторых отелях установлены универсальные розетки (включая USB). На всякий случай берите переходник Type F → USB или Power bank с Type-C.</div></div></div>
 
+<div class="weather-intro reveal" style="margin-top: 28px;">
+<h3>💱 Конвертер валют</h3>
+<p>Курс условный (лето 2026). Введите сумму — получите эквивалент в другой валюте.</p>
+</div>
+
+<div class="currency-wrap reveal-scale">
+<div class="currency-row">
+<div class="currency-input-wrap">
+<label>Сумма</label>
+<input id="curAmount" min="0" step="0.01" type="number" value="100"/>
+</div>
+<div class="currency-arrow">→</div>
+<div class="currency-input-wrap">
+<label>Валюта</label>
+<select id="curCurrency">
+<option value="EUR">€ Евро</option>
+<option value="USD">$ Доллар США</option>
+<option selected="selected" value="TRY">₺ Турецкая лира</option>
+<option value="RUB">₽ Российский рубль</option>
+</select>
+</div>
+</div>
+<div class="currency-rate" id="curResult">100 ₺ = <strong>≈ 280 ₽</strong> &nbsp;•&nbsp; ≈ €2.86 &nbsp;•&nbsp; ≈ $3.12</div>
+</div>
+
 <div class="panel-nav">
 <button aria-label="Предыдущая вкладка" class="panel-nav-btn prev" data-prev="excursions">Назад</button>
+<button aria-label="Следующая вкладка" class="panel-nav-btn next" data-next="week">Неделя →</button>
+</div>
+</div>
+</div>
+</section>
+<!-- ==================== TAB 18: WEEK SCHEDULE ==================== -->
+<section aria-labelledby="tab-week" class="tab-panel" data-panel="week" hidden="" id="panel-week" role="tabpanel">
+<div class="container">
+<div class="panel-section">
+<h2 class="section-title reveal">📅 Расписание анимации на неделю</h2>
+<p class="subtitle reveal">Команда мистера Doğan: каждый день новое шоу + дневная анимация. Сегодня — выделено золотым.</p>
+
+<div class="weather-intro reveal">
+<h3>🎬 Ежедневные шоу (21:30-23:00)</h3>
+<p>Каждый вечер на главной сцене у бассейна. Бесплатно для всех гостей. Приходите за 15 минут — лучшие места разбирают быстро.</p>
+</div>
+
+<div class="week-grid" id="weekGrid">
+<div class="day-card reveal" data-delay="1" data-weekday="1">
+<div class="day-header"><span class="day-name">Понедельник</span><span class="day-badge">🇹🇷 Турецкая ночь</span></div>
+<div class="day-body">
+<div class="day-event"><span class="time">11:00</span><span class="title"><span class="emoji">🏊</span>Аквааэробика</span></div>
+<div class="day-event"><span class="time">12:00</span><span class="title"><span class="emoji">🎯</span>Дартс</span></div>
+<div class="day-event"><span class="time">15:00</span><span class="title"><span class="emoji">🏹</span>Стрельба из лука</span></div>
+<div class="day-event"><span class="time">17:00</span><span class="title"><span class="emoji">🍹</span>Happy Hour</span></div>
+<div class="day-event"><span class="time">21:00</span><span class="title"><span class="emoji">👶</span>Мини-диско</span></div>
+<div class="day-event"><span class="time">21:30</span><span class="title"><span class="emoji">💃</span>Турецкие танцы + барабанщики</span></div>
+</div>
+</div>
+<div class="day-card reveal" data-delay="2" data-weekday="2">
+<div class="day-header"><span class="day-name">Вторник</span><span class="day-badge">🎤 Караоке</span></div>
+<div class="day-body">
+<div class="day-event"><span class="time">11:00</span><span class="title"><span class="emoji">🏊</span>Водное поло</span></div>
+<div class="day-event"><span class="time">12:00</span><span class="emoji">🎯</span><span class="title">Бочче</span></div>
+<div class="day-event"><span class="time">15:00</span><span class="title"><span class="emoji">🎯</span>Пневматика</span></div>
+<div class="day-event"><span class="time">17:00</span><span class="title"><span class="emoji">🍹</span>Happy Hour</span></div>
+<div class="day-event"><span class="time">21:00</span><span class="title"><span class="emoji">👶</span>Мини-диско</span></div>
+<div class="day-event"><span class="time">21:30</span><span class="title"><span class="emoji">🎤</span>Караоке-баттл</span></div>
+</div>
+</div>
+<div class="day-card reveal" data-delay="3" data-weekday="3">
+<div class="day-header"><span class="day-name">Среда</span><span class="day-badge">🎭 Акробаты</span></div>
+<div class="day-body">
+<div class="day-event"><span class="time">11:00</span><span class="title"><span class="emoji">🏊</span>Аквааэробика</span></div>
+<div class="day-event"><span class="time">12:00</span><span class="title"><span class="emoji">🎯</span>Дартс</span></div>
+<div class="day-event"><span class="time">15:00</span><span class="title"><span class="emoji">🧘</span>Йога</span></div>
+<div class="day-event"><span class="time">17:00</span><span class="title"><span class="emoji">🍹</span>Happy Hour</span></div>
+<div class="day-event"><span class="time">21:00</span><span class="title"><span class="emoji">👶</span>Мини-диско</span></div>
+<div class="day-event"><span class="time">21:30</span><span class="title"><span class="emoji">🎭</span>Шоу цирковых акробатов</span></div>
+</div>
+</div>
+<div class="day-card reveal" data-delay="4" data-weekday="4">
+<div class="day-header"><span class="day-name">Четверг</span><span class="day-badge">🔥 Файер-шоу</span></div>
+<div class="day-body">
+<div class="day-event"><span class="time">11:00</span><span class="title"><span class="emoji">🏊</span>Водное поло</span></div>
+<div class="day-event"><span class="time">12:00</span><span class="title"><span class="emoji">🎯</span>Бочче</span></div>
+<div class="day-event"><span class="time">15:00</span><span class="title"><span class="emoji">🏹</span>Стрельба из лука</span></div>
+<div class="day-event"><span class="time">17:00</span><span class="title"><span class="emoji">🍹</span>Happy Hour</span></div>
+<div class="day-event"><span class="time">21:00</span><span class="title"><span class="emoji">👶</span>Мини-диско</span></div>
+<div class="day-event"><span class="time">21:30</span><span class="title"><span class="emoji">🔥</span>Файер-шоу у бассейна</span></div>
+</div>
+</div>
+<div class="day-card reveal" data-delay="5" data-weekday="5">
+<div class="day-header"><span class="day-name">Пятница</span><span class="day-badge">🐟 Рыбная ночь</span></div>
+<div class="day-body">
+<div class="day-event"><span class="time">11:00</span><span class="title"><span class="emoji">🏊</span>Аквааэробика</span></div>
+<div class="day-event"><span class="time">12:00</span><span class="title"><span class="emoji">🎯</span>Дартс</span></div>
+<div class="day-event"><span class="time">15:00</span><span class="title"><span class="emoji">🎯</span>Пневматика</span></div>
+<div class="day-event"><span class="time">17:00</span><span class="title"><span class="emoji">🍹</span>Happy Hour</span></div>
+<div class="day-event"><span class="time">21:00</span><span class="title"><span class="emoji">👶</span>Мини-диско</span></div>
+<div class="day-event"><span class="time">21:30</span><span class="title"><span class="emoji">🐟</span>Live-музыка + рыбный буфет</span></div>
+</div>
+</div>
+<div class="day-card reveal" data-delay="6" data-weekday="6">
+<div class="day-header"><span class="day-name">Суббота</span><span class="day-badge">💃 Live-музыка</span></div>
+<div class="day-body">
+<div class="day-event"><span class="time">11:00</span><span class="title"><span class="emoji">🏊</span>Водное поло</span></div>
+<div class="day-event"><span class="time">12:00</span><span class="title"><span class="emoji">🎯</span>Бочче</span></div>
+<div class="day-event"><span class="time">15:00</span><span class="title"><span class="emoji">🧘</span>Йога</span></div>
+<div class="day-event"><span class="time">17:00</span><span class="title"><span class="emoji">🍹</span>Happy Hour</span></div>
+<div class="day-event"><span class="time">21:00</span><span class="title"><span class="emoji">👶</span>Мини-диско</span></div>
+<div class="day-event"><span class="time">21:30</span><span class="title"><span class="emoji">💃</span>Live-группа + танцы</span></div>
+</div>
+</div>
+<div class="day-card reveal" data-delay="7" data-weekday="0">
+<div class="day-header"><span class="day-name">Воскресенье</span><span class="day-badge">🏆 Награждение</span></div>
+<div class="day-body">
+<div class="day-event"><span class="time">11:00</span><span class="title"><span class="emoji">🏊</span>Аквааэробика</span></div>
+<div class="day-event"><span class="time">12:00</span><span class="title"><span class="emoji">🎯</span>Дартс</span></div>
+<div class="day-event"><span class="time">15:00</span><span class="title"><span class="emoji">🏹</span>Стрельба из лука</span></div>
+<div class="day-event"><span class="time">17:00</span><span class="title"><span class="emoji">🍹</span>Happy Hour</span></div>
+<div class="day-event"><span class="time">21:00</span><span class="title"><span class="emoji">👶</span>Мини-диско</span></div>
+<div class="day-event"><span class="time">21:30</span><span class="title"><span class="emoji">🏆</span>Награждение победителей недели</span></div>
+</div>
+</div>
+</div>
+
+<div class="weather-intro reveal" style="margin-top: 28px;">
+<h3>👶 Mini Club — ежедневно</h3>
+<p>С 10:00 до 12:00 и с 14:00 до 17:00. Дети 4-12 лет. Аниматоры: Эсра, Шейма, Хасрет. Бесплатно!</p>
+</div>
+
+<div class="checklist-grid">
+<div class="checklist-card reveal" data-delay="1">
+<h4>🎨 Утро (10:00-12:00)</h4>
+<ul>
+<li>Рисование красками</li>
+<li>Лепка из глины</li>
+<li>Подвижные игры у бассейна</li>
+<li>Танцы с аниматорами</li>
+<li>Конкурс «Мини-мисс»</li>
+</ul>
+</div>
+<div class="checklist-card reveal" data-delay="2">
+<h4>🎈 День (14:00-17:00)</h4>
+<ul>
+<li>Купание в детском бассейне</li>
+<li>Гонки на горках</li>
+<li>Квест по отелю</li>
+<li>Спортивные эстафеты</li>
+<li>Творческая мастерская</li>
+</ul>
+</div>
+<div class="checklist-card reveal" data-delay="3">
+<h4>🌃 Вечер (21:00-21:30)</h4>
+<ul>
+<li>Мини-диско каждый день</li>
+<li>Пиратская вечеринка (вт)</li>
+<li>Гавайская вечеринка (чт)</li>
+<li>Карнавал (сб)</li>
+<li>Прощальное шоу (вс)</li>
+</ul>
+</div>
+</div>
+
+<div class="panel-nav">
+<button aria-label="Предыдущая вкладка" class="panel-nav-btn prev" data-prev="lifehacks">Назад</button>
+<button aria-label="Следующая вкладка" class="panel-nav-btn next" data-next="kids">Детям →</button>
+</div>
+</div>
+</div>
+</section>
+<!-- ==================== TAB 19: KIDS ==================== -->
+<section aria-labelledby="tab-kids" class="tab-panel" data-panel="kids" hidden="" id="panel-kids" role="tabpanel">
+<div class="container">
+<div class="panel-section">
+<h2 class="section-title reveal">👶 Детский раздел</h2>
+<p class="subtitle reveal">Всё для семей с детьми: Mini Club, безопасность, меню, чек-лист чемодана, игры в дорогу</p>
+
+<div class="weather-intro reveal">
+<h3>🎉 Что отель предлагает детям бесплатно</h3>
+<p>SY Hotels Belek — семейный отель. Дети остаются бесплатно (Kids stay free!), большая программа анимации.</p>
+</div>
+
+<div class="kids-grid">
+<div class="kids-card reveal" data-delay="1">
+<span class="kids-emoji">🎪</span>
+<h4>Mini Club 4-12 лет</h4>
+<p>Профессиональная команда аниматоров: Эсра, Шейма, Хасрет. Программа 10:00-12:00 и 14:00-17:00. Дети в восторге, родители отдыхают.</p>
+<ul>
+<li>Рисование, лепка, поделки</li>
+<li>Игры у бассейна</li>
+<li>Мини-диско каждый вечер 21:00</li>
+<li>Квесты по отелю</li>
+<li>Пиратские и гавайские вечеринки</li>
+</ul>
+</div>
+<div class="kids-card reveal" data-delay="2">
+<span class="kids-emoji">🏊</span>
+<h4>Детский бассейн + горки</h4>
+<p>Отдельная зона с мелким бассейном (глубина 30 см) и 4 детскими горками: 2 Kids Slide Str (9-19 м) и 2 Kids Slide Crv (12-18 м). Возраст 3-10 лет.</p>
+<ul>
+<li>Спасатель на посту 10:00-17:00</li>
+<li>Бесплатные жилеты (в залог — карточка отеля)</li>
+<li>Тень от навесов</li>
+<li>Близко к бару с мороженым</li>
+</ul>
+</div>
+<div class="kids-card reveal" data-delay="3">
+<span class="kids-emoji">🍦</span>
+<h4>Детское меню</h4>
+<p>В ресторане Sirius — отдельный детский уголок. Также полдник 15:00-17:00 с гёдёме (турецкие пончики) и мороженым.</p>
+<ul>
+<li>Макароны, пицца, куриные наггетсы</li>
+<li>Картошка фри, овощи</li>
+<li>Соки, молоко, какао</li>
+<li>Мороженое 5 видов</li>
+<li>Свежие фрукты 3 раза в день</li>
+</ul>
+</div>
+<div class="kids-card reveal" data-delay="4">
+<span class="kids-emoji">🛏</span>
+<h4>Семейные номера</h4>
+<p>Deluxe Family (43 м²) и Duplex Family (39 м², 2 этажа). Дети до 12 лет — бесплатно в номере с родителями.</p>
+<ul>
+<li>Дополнительная детская кроватка (0-3 года) — бесплатно</li>
+<li>Сейф в номере</li>
+<li>Звукоизолированные окна</li>
+<li>Минибар с соками и водой</li>
+<li>Мультики по ТВ (турецкие + английские)</li>
+</ul>
+</div>
+<div class="kids-card reveal" data-delay="5">
+<span class="kids-emoji">🦒</span>
+<h4>The Land of Legends</h4>
+<p>700 м от отеля — крупнейший парк аттракционов Турции. Дельфинарий, аквапарк, 5D-кинотеатр, роликовые горки. Дети будут в восторге.</p>
+<ul>
+<li>Пешком 10 минут</li>
+<li>Билет на день: 35-50 €</li>
+<li>Дети до 6 лет — скидка 50%</li>
+<li>Лучше идти утром (меньше очередей)</li>
+<li>Взять сменную одежду (водные аттракционы)</li>
+</ul>
+</div>
+<div class="kids-card reveal" data-delay="6">
+<span class="kids-emoji">🦈</span>
+<h4>Безопасность детей</h4>
+<p>Важные правила для родителей. Отель безопасен, но базовые правила соблюдайте.</p>
+<ul>
+<li>Возле бассейна — только с родителями до 12 лет</li>
+<li>На горках — рост от 120 см (детские — от 90 см)</li>
+<li>Солнцезащитный крем SPF 50+ каждые 2 часа</li>
+<li>Панама/кепка обязательно с 11:00 до 16:00</li>
+<li>Не оставляйте детей одних в номере</li>
+<li>Запишите номер ресепшен в телефон ребёнка</li>
+</ul>
+</div>
+</div>
+
+<div class="weather-intro reveal" style="margin-top: 28px;">
+<h3>🎮 Игры в дорогу (самолёт/такси)</h3>
+<p>3 часа в самолёте + 1 час такси = нужно чем-то занять ребёнка. Без экрана!</p>
+</div>
+
+<div class="checklist-grid">
+<div class="checklist-card reveal" data-delay="1">
+<h4>✏️ Без экрана</h4>
+<ul>
+<li>Раскраска + 6 фломастеров</li>
+<li>Маленький блокнот + карандаши</li>
+<li>Наклейки (дinos/принцессы/животные)</li>
+<li>Магнитные шахматы/шашки</li>
+<li>Карты «Мемори» (45 карточек)</li>
+<li>Книжка с окошками</li>
+</ul>
+</div>
+<div class="checklist-card reveal" data-delay="2">
+<h4>📱 Если с экраном</h4>
+<ul>
+<li>Скачай мультики заранее (Netflix офлайн)</li>
+<li>Audiocказки (Storytel, Букмейт)</li>
+<li>Toca Boca, Khan Academy Kids</li>
+<li>Headphones (беспроводные)</li>
+<li>Power bank заряженный</li>
+<li>Лимит — 30 минут за раз</li>
+</ul>
+</div>
+<div class="checklist-card reveal" data-delay="3">
+<h4>🍪 Снеки (без сахара)</h4>
+<ul>
+<li>Яблочное пюре в паучах</li>
+<li>Овощные чипсы</li>
+<li>Сухофрукты (курага, изюм)</li>
+<li>Орехи (если нет аллергии)</li>
+<li>Вода в маленькой бутылке</li>
+<li>Жевательная резинка (при взлёте)</li>
+</ul>
+</div>
+</div>
+
+<div class="weather-intro reveal" style="margin-top: 28px;">
+<h3>🎯 Чек-лист чемодана для ребёнка</h3>
+<p>Сохраните, чтобы не забыть самое важное для детей 4-12 лет.</p>
+</div>
+
+<div class="checklist-grid">
+<div class="checklist-card reveal" data-delay="1">
+<h4>👕 Одежда (7 дней)</h4>
+<ul>
+<li>5 футболок</li>
+<li>3 шорта / 1 штаны</li>
+<li>2 купальника / плавки</li>
+<li>Шлёпанцы + кроссовки</li>
+<li>Панама / кепка (обязательно!)</li>
+<li>Солнцезащитные очки детские</li>
+<li>Лёгкая куртка (кондиционеры)</li>
+<li>Пижама</li>
+</ul>
+</div>
+<div class="checklist-card reveal" data-delay="2">
+<h4>🧴 Гигиена</h4>
+<ul>
+<li>Детский шампунь 2-в-1</li>
+<li>Детский крем от солнца SPF 50+</li>
+<li>Влажные салфетки (2 пачки)</li>
+<li>Зубная щётка + паста детская</li>
+<li>Расчёска</li>
+<li>Полотенце маленькое (для бассейна)</li>
+<li>Подгузники (если нужно) + 3 запаса</li>
+</ul>
+</div>
+<div class="checklist-card reveal" data-delay="3">
+<h4>💊 Аптечка детская</h4>
+<ul>
+<li>Нурофен детский (сироп/таблетки)</li>
+<li>Парацетамол детский</li>
+<li>Смекта / полисорб (отравление)</li>
+<li>Антигистаминное (зиртек капли)</li>
+<li>Бинт, пластыри с мультиками</li>
+<li>Антисептик</li>
+<li>Капли в нос (аквамарис)</li>
+<li>Термометр электронный</li>
+</ul>
+</div>
+<div class="checklist-card reveal" data-delay="4">
+<h4>🧸 Любимое</h4>
+<ul>
+<li>Любимая игрушка / плед</li>
+<li>Пустышка (если ещё с ней)</li>
+<li>Маленький рюкзак для Mini Club</li>
+<li>Бутылка/поилка непроливайка</li>
+<li>Купальник с защитой от солнца</li>
+<li>Круг/нарукавники для бассейна</li>
+<li>Браслет с номером телефона родителя</li>
+</ul>
+</div>
+</div>
+
+<div class="panel-nav">
+<button aria-label="Предыдущая вкладка" class="panel-nav-btn prev" data-prev="week">Назад</button>
 <button aria-label="Конец" class="panel-nav-btn next" disabled="">Конец</button>
 </div>
 </div>
 </div>
 </section>
 </main>
+
+<!-- ✨ Search modal -->
+<div aria-label="Поиск по сайту" aria-modal="true" class="search-modal" id="searchModal" role="dialog">
+<div class="search-box">
+<div class="search-input-wrap">
+<span class="icon">🔍</span>
+<input aria-label="Поиск" id="searchInput" placeholder="Введите запрос: аквапарк, ужин, трансфер, лайфхак..." type="text"/>
+<span class="esc">ESC</span>
+</div>
+<div class="search-results" id="searchResults"></div>
+</div>
+</div>
 <!-- ✅ FIX #6: LIGHTBOX с aria-label -->
 <div aria-label="Просмотр фото" aria-modal="true" class="lightbox" id="lightbox" role="dialog">
 <div aria-label="Закрыть просмотр" class="lightbox-close" onclick="closeLightbox()" role="button" tabindex="0">×</div>
@@ -3377,6 +4052,227 @@ document.querySelectorAll('.sub-tab').forEach(tab => {
         window.open(url, '_blank', 'noopener,noreferrer,width=600,height=540');
       }
     });
+  });
+
+  // ---------- 12. Currency converter ----------
+  const curAmount = document.getElementById('curAmount');
+  const curCurrency = document.getElementById('curCurrency');
+  const curResult = document.getElementById('curResult');
+  // Курсы относительно 1 EUR (лето 2026, условные)
+  const rates = { EUR: 1, USD: 1.09, TRY: 35, RUB: 100 };
+  const symbols = { EUR: '€', USD: '$', TRY: '₺', RUB: '₽' };
+
+  function convertCurrency() {
+    if (!curAmount || !curCurrency || !curResult) return;
+    const amount = parseFloat(curAmount.value) || 0;
+    const from = curCurrency.value;
+    // Сумма в EUR
+    const inEUR = amount / rates[from];
+    // Конвертируем в каждую валюту
+    const parts = [];
+    for (const [code, rate] of Object.entries(rates)) {
+      if (code === from) continue;
+      const val = inEUR * rate;
+      const formatted = val >= 100 ? val.toFixed(0) : val.toFixed(2);
+      parts.push(`≈ ${symbols[code]}${formatted}`);
+    }
+    curResult.innerHTML = `${amount} ${symbols[from]} = <strong>${parts[0]}</strong> &nbsp;•&nbsp; ${parts[1]} &nbsp;•&nbsp; ${parts[2]}`;
+  }
+  if (curAmount && curCurrency) {
+    curAmount.addEventListener('input', convertCurrency);
+    curCurrency.addEventListener('change', convertCurrency);
+    convertCurrency(); // начальный расчёт
+  }
+
+  // ---------- 13. Highlight today in week schedule ----------
+  const today = new Date().getDay(); // 0=вс, 1=пн, ..., 6=сб
+  document.querySelectorAll('.day-card[data-weekday]').forEach(card => {
+    if (parseInt(card.dataset.weekday, 10) === today) {
+      card.classList.add('today');
+      // Добавим бейдж «Сегодня»
+      const badge = document.createElement('span');
+      badge.className = 'day-badge';
+      badge.style.background = 'linear-gradient(135deg, #d4af37, #f5b700)';
+      badge.style.color = '#0a0a14';
+      badge.textContent = '⭐ Сегодня';
+      card.querySelector('.day-header').appendChild(badge);
+    }
+  });
+
+  // ---------- 14. Favorites (localStorage) ----------
+  const FAV_KEY = 'sy-belek-favorites';
+  let favorites = {};
+  try { favorites = JSON.parse(localStorage.getItem(FAV_KEY) || '{}'); } catch { favorites = {}; }
+
+  function saveFavorites() {
+    try { localStorage.setItem(FAV_KEY, JSON.stringify(favorites)); } catch {}
+  }
+
+  // Добавляем кнопки-звёздочки на экскурсии и лайфхаки
+  function attachFavButtons() {
+    // На карточки экскурсий
+    document.querySelectorAll('.excursion-card h4, .lifehack-card h4, .kids-card h4, .day-card .day-name').forEach(titleEl => {
+      const card = titleEl.closest('.excursion-card, .lifehack-card, .kids-card, .day-card');
+      if (!card || card.querySelector('.fav-btn')) return;
+      // ID = текст заголовка
+      const id = titleEl.textContent.trim().slice(0, 60);
+      const btn = document.createElement('button');
+      btn.className = 'fav-btn';
+      btn.setAttribute('aria-label', 'В избранное');
+      btn.title = 'Добавить в избранное';
+      if (favorites[id]) btn.classList.add('active');
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        if (favorites[id]) {
+          delete favorites[id];
+          btn.classList.remove('active');
+          showToast('Убрано из избранного', true);
+        } else {
+          favorites[id] = true;
+          btn.classList.add('active');
+          showToast('Добавлено в избранное ★', true);
+        }
+        saveFavorites();
+      });
+      card.style.position = 'relative';
+      card.appendChild(btn);
+    });
+  }
+  attachFavButtons();
+
+  // ---------- 15. Search modal ----------
+  const searchTrigger = document.getElementById('searchTrigger');
+  const searchModal = document.getElementById('searchModal');
+  const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+
+  // Индекс для поиска
+  const searchIndex = [
+    { e: '🎢', t: 'Mega Splash Aquapark — 14 горок', tab: 'slides', d: 'Body Slides, Kids Slides, Hill Slide' },
+    { e: '🏊', t: '4 бассейна: Maldiv, Outdoor, Indoor, B Block', tab: 'pools', d: 'Maldives Pool с белым песком, подогрев +16°C' },
+    { e: '🛏', t: 'Deluxe Room (23 м²)', tab: 'rooms', d: 'Стандартный номер с кроватью' },
+    { e: '🛋', t: 'Deluxe Superior (41 м²)', tab: 'rooms', d: 'Просторный номер' },
+    { e: '👨‍👩‍👧', t: 'Deluxe Family (43 м²)', tab: 'rooms', d: 'Семейный номер с двумя кроватями' },
+    { e: '🏊', t: 'Deluxe Swim-Up', tab: 'rooms', d: 'Номер с прямым выходом в бассейн' },
+    { e: '🏠', t: 'Duplex Family (39 м²)', tab: 'rooms', d: 'Двухуровневый семейный номер' },
+    { e: '💧', t: 'Shallow Pool Room', tab: 'rooms', d: 'Номер у мелкого бассейна' },
+    { e: '🍽', t: 'Sirius Restaurant — главный', tab: 'food', d: 'Шведский стол, тематические ужины' },
+    { e: '🍴', t: 'Larimar Beach Restaurant', tab: 'food', d: 'Рыба и морепродукты на пляже' },
+    { e: '🧁', t: 'Bettelglow Patisserie', tab: 'food', d: 'Свежая выпечка, десерты, кофе' },
+    { e: '💆', t: 'SPA & Wellness центр', tab: 'spa', d: 'Хаммам, массаж, сауна, фитнес' },
+    { e: '🧖', t: 'Турецкий хаммам', tab: 'spa', d: 'Мраморный зал, традиционные процедуры' },
+    { e: '🏋️', t: 'Фитнес-центр', tab: 'spa', d: 'Современные тренажёры' },
+    { e: '🛒', t: 'Рынок и покупки', tab: 'market', d: 'Чек-лист, цены, магазины, сувениры' },
+    { e: '🎁', t: 'Сувениры из Турции', tab: 'market', d: 'Чай, мёд, лукум, назар, керамика' },
+    { e: '💰', t: 'Цены 2026', tab: 'market', d: 'Вода, кофе, такси, алкоголь' },
+    { e: '💳', t: 'Валюта и оплата', tab: 'market', d: 'Карты, Apple Pay, чаевые' },
+    { e: '🗺', t: 'Топ-10 экскурсий', tab: 'excursions', d: 'Перге, Каппадокия, Памуккале, яхт-тур' },
+    { e: '✈️', t: 'Аэропорт → отель', tab: 'excursions', d: 'Такси, трансфер, автобус, аренда' },
+    { e: '🚕', t: 'Транспорт в Белеке', tab: 'excursions', d: 'Долмуш, такси, скутер' },
+    { e: '⏰', t: 'Расписание дня', tab: 'excursions', d: 'Завтрак, бассейн, ужин, шоу' },
+    { e: '💡', t: 'Топ-10 лайфхаков', tab: 'lifehacks', d: 'Заселение, чаевые, алкоголь, Mini Club' },
+    { e: '🗣', t: 'Турецкий разговорник', tab: 'lifehacks', d: '20 фраз с транскрипцией' },
+    { e: '📞', t: 'Полезные телефоны', tab: 'lifehacks', d: 'Полиция, скорая, консульство РФ' },
+    { e: '📱', t: 'Сим-карта и интернет', tab: 'lifehacks', d: 'Turkcell, eSIM Airalo, WhatsApp' },
+    { e: '🏥', t: 'Медицина и аптеки', tab: 'lifehacks', d: 'Страховка, больницы, лекарства' },
+    { e: '💱', t: 'Конвертер валют', tab: 'lifehacks', d: 'EUR/USD/TRY/RUB' },
+    { e: '📅', t: 'Расписание анимации на неделю', tab: 'week', d: 'Шоу каждый вечер 21:30' },
+    { e: '👶', t: 'Mini Club 4-12 лет', tab: 'kids', d: 'Эсра, Шейма, Хасрет' },
+    { e: '🦒', t: 'The Land of Legends', tab: 'kids', d: 'Парк аттракционов 700 м от отеля' },
+    { e: '🧸', t: 'Чек-лист чемодана ребёнка', tab: 'kids', d: 'Одежда, гигиена, аптечка, любимое' },
+    { e: '⚖️', t: 'Сравнение отелей', tab: 'compare', d: 'SY Belek vs Cornelia vs Regnum' },
+    { e: '💬', t: 'Отзывы гостей', tab: 'reviews', d: '8 локализованных отзывов + pie chart' },
+    { e: '🌤', t: 'Погода по месяцам', tab: 'weather', d: 'Когда лучше ехать' },
+    { e: '📍', t: 'Карта и расположение', tab: 'map', d: 'Контакты, аэропорт, пляж' },
+    { e: '🎥', t: 'Видеообзоры отеля', tab: 'video', d: 'YouTube, 2 видео' },
+    { e: '📰', t: 'Новости отеля', tab: 'news', d: 'Акции, награды, анимация 2026' },
+  ];
+
+  function openSearch() {
+    if (!searchModal) return;
+    searchModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => searchInput?.focus(), 50);
+  }
+  function closeSearch() {
+    if (!searchModal) return;
+    searchModal.classList.remove('active');
+    document.body.style.overflow = '';
+    if (searchInput) searchInput.value = '';
+    if (searchResults) searchResults.innerHTML = '';
+  }
+
+  function highlight(text, query) {
+    if (!query) return text;
+    const re = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+    return text.replace(re, '<mark>$1</mark>');
+  }
+
+  function renderSearchResults(query) {
+    if (!searchResults) return;
+    if (!query || query.length < 2) {
+      searchResults.innerHTML = '<div class="search-empty">Введите минимум 2 символа...</div>';
+      return;
+    }
+    const q = query.toLowerCase();
+    const matches = searchIndex.filter(item =>
+      item.t.toLowerCase().includes(q) ||
+      item.d.toLowerCase().includes(q) ||
+      item.tab.toLowerCase().includes(q)
+    ).slice(0, 10);
+
+    if (matches.length === 0) {
+      searchResults.innerHTML = '<div class="search-empty">😕 Ничего не найдено. Попробуйте: аквапарк, ужин, трансфер, лайфхак, дети...</div>';
+      return;
+    }
+
+    searchResults.innerHTML = matches.map((m, i) => `
+      <div class="search-result${i === 0 ? ' active' : ''}" data-tab="${m.tab}">
+        <span class="res-emoji">${m.e}</span>
+        <div class="res-info">
+          <strong>${highlight(m.t, query)}</strong>
+          <span>${highlight(m.d, query)}</span>
+        </div>
+      </div>
+    `).join('');
+
+    // Клик по результату
+    searchResults.querySelectorAll('.search-result').forEach(el => {
+      el.addEventListener('click', () => {
+        const tab = el.dataset.tab;
+        if (tab && typeof window.switchTab === 'function') {
+          closeSearch();
+          window.switchTab(tab);
+        }
+      });
+    });
+  }
+
+  if (searchTrigger) {
+    searchTrigger.addEventListener('click', openSearch);
+  }
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => renderSearchResults(e.target.value));
+  }
+  // Закрытие по клику вне модалки
+  if (searchModal) {
+    searchModal.addEventListener('click', (e) => {
+      if (e.target === searchModal) closeSearch();
+    });
+  }
+  // Горячие клавиши
+  document.addEventListener('keydown', (e) => {
+    // Ctrl+K / Cmd+K — открыть поиск
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      if (searchModal?.classList.contains('active')) closeSearch();
+      else openSearch();
+    }
+    // ESC — закрыть
+    if (e.key === 'Escape' && searchModal?.classList.contains('active')) {
+      closeSearch();
+    }
   });
 
 })();
