@@ -1385,6 +1385,128 @@
     font-size: 0.78em; color: rgba(232,232,239,0.5);
   }
   .currency-rate strong { color: #d4af37; }
+
+  /* ---------- 39. Кнопка «☰ Ещё» в навигации ---------- */
+  .tab-btn.tab-more {
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #d4af37;
+    margin-left: 6px;
+    font-weight: 700;
+  }
+  .tab-btn.tab-more:hover {
+    background: linear-gradient(135deg, #d4af37, #f5b700);
+    color: #0a0a14;
+    border-color: transparent;
+  }
+
+  /* ---------- 40. Full-screen меню «Ещё» ---------- */
+  .more-menu {
+    display: none; position: fixed; inset: 0; z-index: 900;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    overflow-y: auto; padding: 20px 16px 60px;
+    animation: fadeIn 0.25s ease-out;
+  }
+  .more-menu.active { display: block; }
+  .more-menu-inner {
+    max-width: 720px; margin: 0 auto;
+    background: linear-gradient(180deg, #14142a, #0a0a14);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 20px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 50px rgba(212, 175, 55, 0.2);
+    overflow: hidden;
+  }
+  .more-menu-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, rgba(212,175,55,0.18), rgba(245,183,0,0.06));
+    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    position: sticky; top: 0; z-index: 2;
+  }
+  .more-menu-header h3 {
+    color: #d4af37; font-size: 1.2em; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 1.5px;
+  }
+  .more-menu-close {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #d4af37; font-size: 1.4em; cursor: pointer;
+    font-family: inherit; transition: 0.3s;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+  }
+  .more-menu-close:hover {
+    background: rgba(212, 175, 55, 0.35);
+    transform: rotate(90deg);
+  }
+  .more-menu-body { padding: 8px 0; }
+  .more-category {
+    padding: 14px 22px 6px;
+    color: rgba(212, 175, 55, 0.7);
+    font-size: 0.72em; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 2px;
+    border-top: 1px solid rgba(212, 175, 55, 0.08);
+  }
+  .more-category:first-child { border-top: none; }
+  .more-items {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px; padding: 6px 16px 14px;
+  }
+  .more-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 10px;
+    color: rgba(232, 232, 239, 0.85);
+    cursor: pointer; transition: 0.25s;
+    font-size: 0.88em; font-weight: 600; font-family: inherit;
+    text-align: left;
+  }
+  .more-item:hover {
+    background: rgba(212, 175, 55, 0.12);
+    border-color: rgba(212, 175, 55, 0.5);
+    transform: translateY(-2px);
+    color: #fff5b7;
+  }
+  .more-item .icon { font-size: 1.3em; flex-shrink: 0; }
+  .more-item.active {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(245, 183, 0, 0.1));
+    border-color: rgba(212, 175, 55, 0.6);
+    color: #fff5b7;
+  }
+  @media (max-width: 480px) {
+    .more-items { grid-template-columns: 1fr 1fr; }
+    .more-item { padding: 10px 12px; font-size: 0.82em; }
+  }
+
+  /* ---------- 41. Подсказка «обновление доступно» ---------- */
+  .update-banner {
+    position: fixed; bottom: -100px; left: 50%;
+    transform: translateX(-50%); z-index: 800;
+    background: linear-gradient(135deg, #14142a, #1a1a35);
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    border-radius: 100px; padding: 12px 22px;
+    display: flex; align-items: center; gap: 14px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.5), 0 0 30px rgba(212,175,55,0.3);
+    transition: bottom 0.5s cubic-bezier(.2,.7,.2,1);
+    max-width: 90vw;
+  }
+  .update-banner.visible { bottom: 28px; }
+  .update-banner .text {
+    color: #f5f5fa; font-size: 0.88em; font-weight: 600;
+  }
+  .update-banner .text strong { color: #d4af37; }
+  .update-banner .btn {
+    background: linear-gradient(135deg, #d4af37, #f5b700);
+    color: #0a0a14; border: none; padding: 8px 16px;
+    border-radius: 100px; font-weight: 800; font-size: 0.85em;
+    cursor: pointer; font-family: inherit; white-space: nowrap;
+    transition: 0.3s;
+  }
+  .update-banner .btn:hover { transform: scale(1.05); }
 </style>
 </head>
 <body>
@@ -1504,24 +1626,12 @@
 <div class="brand">★ SY BELEK</div>
 <div class="tab-list" role="tablist">
 <button aria-controls="panel-overview" aria-selected="true" class="tab-btn active" data-tab="overview" role="tab">Обзор</button>
-<button aria-controls="panel-weather" aria-selected="false" class="tab-btn" data-tab="weather" role="tab">Погода</button>
-<button aria-controls="panel-pros" aria-selected="false" class="tab-btn" data-tab="pros" role="tab">Плюсы</button>
-<button aria-controls="panel-cons" aria-selected="false" class="tab-btn" data-tab="cons" role="tab">Минусы</button>
 <button aria-controls="panel-rooms" aria-selected="false" class="tab-btn" data-tab="rooms" role="tab">Номера</button>
 <button aria-controls="panel-slides" aria-selected="false" class="tab-btn" data-tab="slides" role="tab">Горки</button>
-<button aria-controls="panel-food" aria-selected="false" class="tab-btn" data-tab="food" role="tab">Еда</button>
 <button aria-controls="panel-pools" aria-selected="false" class="tab-btn" data-tab="pools" role="tab">Бассейны</button>
-<button aria-controls="panel-spa" aria-selected="false" class="tab-btn" data-tab="spa" role="tab">SPA</button>
-<button aria-controls="panel-map" aria-selected="false" class="tab-btn" data-tab="map" role="tab">Карта</button>
-<button aria-controls="panel-news" aria-selected="false" class="tab-btn" data-tab="news" role="tab">Новости</button>
-<button aria-controls="panel-video" aria-selected="false" class="tab-btn" data-tab="video" role="tab">🎥 Видео</button>
+<button aria-controls="panel-food" aria-selected="false" class="tab-btn" data-tab="food" role="tab">Еда</button>
 <button aria-controls="panel-reviews" aria-selected="false" class="tab-btn" data-tab="reviews" role="tab">Отзывы</button>
-<button aria-controls="panel-compare" aria-selected="false" class="tab-btn" data-tab="compare" role="tab">⚖️ Сравнение</button>
-<button aria-controls="panel-market" aria-selected="false" class="tab-btn" data-tab="market" role="tab">🛒 Рынок</button>
-<button aria-controls="panel-excursions" aria-selected="false" class="tab-btn" data-tab="excursions" role="tab">🗺 Экскурсии</button>
-<button aria-controls="panel-lifehacks" aria-selected="false" class="tab-btn" data-tab="lifehacks" role="tab">💡 Лайфхаки</button>
-<button aria-controls="panel-week" aria-selected="false" class="tab-btn" data-tab="week" role="tab">📅 Неделя</button>
-<button aria-controls="panel-kids" aria-selected="false" class="tab-btn" data-tab="kids" role="tab">👶 Детям</button>
+<button aria-label="Показать все разделы" class="tab-btn tab-more" id="moreTrigger" role="button">☰ Ещё</button>
 </div>
 </div>
 <button aria-label="Поиск" class="search-trigger" id="searchTrigger" title="Поиск по сайту (Ctrl+K)">🔍<kbd>⌘K</kbd></button>
@@ -3471,6 +3581,52 @@
 <div class="search-results" id="searchResults"></div>
 </div>
 </div>
+
+<!-- ✨ Full-screen меню «Ещё» с группировкой по категориям -->
+<div aria-label="Все разделы" aria-modal="true" class="more-menu" id="moreMenu" role="dialog">
+<div class="more-menu-inner">
+<div class="more-menu-header">
+<h3>☰ Все разделы</h3>
+<button aria-label="Закрыть меню" class="more-menu-close" id="moreMenuClose" title="Закрыть">×</button>
+</div>
+<div class="more-menu-body">
+<div class="more-category">📊 Обзор и оценки</div>
+<div class="more-items">
+<button class="more-item" data-tab="overview"><span class="icon">🏠</span><span>Обзор</span></button>
+<button class="more-item" data-tab="pros"><span class="icon">✅</span><span>Плюсы</span></button>
+<button class="more-item" data-tab="cons"><span class="icon">⚠️</span><span>Минусы</span></button>
+<button class="more-item" data-tab="reviews"><span class="icon">💬</span><span>Отзывы</span></button>
+<button class="more-item" data-tab="compare"><span class="icon">⚖️</span><span>Сравнение</span></button>
+<button class="more-item" data-tab="news"><span class="icon">📰</span><span>Новости</span></button>
+</div>
+<div class="more-category">🛏 Жильё и услуги</div>
+<div class="more-items">
+<button class="more-item" data-tab="rooms"><span class="icon">🛏</span><span>Номера</span></button>
+<button class="more-item" data-tab="slides"><span class="icon">🎢</span><span>Горки</span></button>
+<button class="more-item" data-tab="pools"><span class="icon">🏊</span><span>Бассейны</span></button>
+<button class="more-item" data-tab="food"><span class="icon">🍽</span><span>Еда</span></button>
+<button class="more-item" data-tab="spa"><span class="icon">💆</span><span>SPA</span></button>
+<button class="more-item" data-tab="week"><span class="icon">📅</span><span>Неделя</span></button>
+</div>
+<div class="more-category">🌴 Практичное для поездки</div>
+<div class="more-items">
+<button class="more-item" data-tab="weather"><span class="icon">🌤</span><span>Погода</span></button>
+<button class="more-item" data-tab="excursions"><span class="icon">🗺</span><span>Экскурсии</span></button>
+<button class="more-item" data-tab="market"><span class="icon">🛒</span><span>Рынок</span></button>
+<button class="more-item" data-tab="lifehacks"><span class="icon">💡</span><span>Лайфхаки</span></button>
+<button class="more-item" data-tab="kids"><span class="icon">👶</span><span>Детям</span></button>
+<button class="more-item" data-tab="map"><span class="icon">📍</span><span>Карта</span></button>
+<button class="more-item" data-tab="video"><span class="icon">🎥</span><span>Видео</span></button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ✨ Баннер «обновление доступно» -->
+<div class="update-banner" id="updateBanner">
+<span class="text">🔄 Доступна <strong>новая версия</strong> сайта</span>
+<button class="btn" id="updateBtn">Обновить</button>
+</div>
 <!-- ✅ FIX #6: LIGHTBOX с aria-label -->
 <div aria-label="Просмотр фото" aria-modal="true" class="lightbox" id="lightbox" role="dialog">
 <div aria-label="Закрыть просмотр" class="lightbox-close" onclick="closeLightbox()" role="button" tabindex="0">×</div>
@@ -3718,17 +3874,6 @@ document.querySelectorAll('.sub-tab').forEach(tab => {
 
 (function() {
   'use strict';
-
-  // ---------- 0. Регистрация Service Worker (PWA) ----------
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').then(reg => {
-        // console.log('[SW] registered with scope:', reg.scope);
-      }).catch(err => {
-        console.warn('[SW] registration failed:', err);
-      });
-    });
-  }
 
   // ---------- 1. Scroll progress bar + back-to-top visibility ----------
   const progress = document.getElementById('scrollProgress');
@@ -4274,6 +4419,79 @@ document.querySelectorAll('.sub-tab').forEach(tab => {
       closeSearch();
     }
   });
+
+  // ---------- 16. Full-screen меню «Ещё» ----------
+  const moreTrigger = document.getElementById('moreTrigger');
+  const moreMenu = document.getElementById('moreMenu');
+  const moreMenuClose = document.getElementById('moreMenuClose');
+
+  function openMoreMenu() {
+    if (!moreMenu) return;
+    moreMenu.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    // Подсветка текущей вкладки
+    const activeTab = document.querySelector('.tab-btn.active')?.dataset.tab;
+    moreMenu.querySelectorAll('.more-item').forEach(item => {
+      item.classList.toggle('active', item.dataset.tab === activeTab);
+    });
+  }
+  function closeMoreMenu() {
+    if (!moreMenu) return;
+    moreMenu.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  if (moreTrigger) moreTrigger.addEventListener('click', openMoreMenu);
+  if (moreMenuClose) moreMenuClose.addEventListener('click', closeMoreMenu);
+  if (moreMenu) {
+    moreMenu.addEventListener('click', (e) => {
+      if (e.target === moreMenu) closeMoreMenu();
+    });
+    // Клик по пункту меню
+    moreMenu.querySelectorAll('.more-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const tab = item.dataset.tab;
+        if (tab && typeof window.switchTab === 'function') {
+          closeMoreMenu();
+          setTimeout(() => window.switchTab(tab), 100);
+        }
+      });
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && moreMenu?.classList.contains('active')) closeMoreMenu();
+  });
+
+  // ---------- 17. Service Worker: уведомление об обновлении ----------
+  const updateBanner = document.getElementById('updateBanner');
+  const updateBtn = document.getElementById('updateBtn');
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      // Новый SW активировался — можно перезагрузить
+    });
+    // Проверяем, есть ли обновление
+    navigator.serviceWorker.register('sw.js').then(reg => {
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+        if (newWorker) {
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // Обновление доступно!
+              if (updateBanner) updateBanner.classList.add('visible');
+            }
+          });
+        }
+      });
+      // Проверяем обновления каждые 30 минут
+      setInterval(() => reg.update().catch(() => {}), 30 * 60 * 1000);
+    });
+  }
+  if (updateBtn) {
+    updateBtn.addEventListener('click', () => {
+      if (updateBanner) updateBanner.classList.remove('visible');
+      window.location.reload();
+    });
+  }
 
 })();
 </script>
