@@ -1,17 +1,13 @@
 /* ===================================================================
-   SY Hotels Belek Review — Service Worker
-   Кэширует:
-     - Приложение (index.html, manifest, CSS inline уже в HTML)
-     - Иконки PWA
-     - Все фотографии с syhotels.com (для офлайн-просмотра галерей)
-     - iframe Google Maps (после первого открытия)
-   Стратегия:
-     - App shell: cache-first (мгновенный ответ из кэша)
-     - Фото: stale-while-revalidate (быстро из кэша + фоновое обновление)
-     - Остальное: network-first с fallback в кэш
+   SY Hotels Belek Review — Service Worker v2
+   Изменения:
+     - Новая версия кэша v2 → принудительно инвалидирует старый кэш
+     - HTML / навигация: network-first (пользователь всегда видит свежую версию)
+     - Картинки: stale-while-revalidate (быстро + обновление в фоне)
+     - Прочее: network-first с fallback в кэш
    =================================================================== */
 
-const CACHE_VERSION = 'sy-belek-v1';
+const CACHE_VERSION = 'sy-belek-v2';
 const STATIC_CACHE  = `${CACHE_VERSION}-static`;
 const IMG_CACHE     = `${CACHE_VERSION}-images`;
 
@@ -20,6 +16,8 @@ const APP_SHELL = [
   './',
   './index.html',
   './manifest.webmanifest',
+  './robots.txt',
+  './sitemap.xml',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png',
@@ -32,6 +30,7 @@ const APP_SHELL = [
 const IMG_HOSTS = [
   'syhotels.com',
   'placehold.co',
+  'api.qrserver.com',
 ];
 
 /* ---------- Install: pre-cache app shell ---------- */
@@ -39,7 +38,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(STATIC_CACHE)
       .then(cache => cache.addAll(APP_SHELL))
-      .then(() => self.skipWaiting())
+      .then(() => self.skipWaiting())  // активируем сразу, не ждать закрытия всех вкладок
       .catch(err => console.warn('[SW] install error:', err))
   );
 });
@@ -50,10 +49,13 @@ self.addEventListener('activate', (event) => {
     caches.keys()
       .then(keys => Promise.all(
         keys
-          .filter(key => !key.startsWith(CACHE_VERSION))
-          .map(key => caches.delete(key))
+          .filter(key => !key.startsWith(CACHE_VERSION))  // удаляем всё, что не v2
+          .map(key => {
+            console.log('[SW] удаляю старый кэш:', key);
+            return caches.delete(key);
+          })
       ))
-      .then(() => self.clients.claim())
+      .then(() => self.clients.claim())  // сразу перехватываем клиентов
   );
   console.log('[SW] activated, version', CACHE_VERSION);
 });
@@ -65,30 +67,31 @@ function isCacheableImage(url) {
     && /\.(jpg|jpeg|png|webp|gif|svg)(\?|$)/i.test(url.pathname);
 }
 
-/* ---------- Fetch: маршрутизация по стратегиям ---------- */
+/* ---------- Fetch: маршрутизация ---------- */
 self.addEventListener('fetch', (event) => {
   const req = event.request;
-
-  // Только GET
   if (req.method !== 'GET') return;
 
   let url;
   try { url = new URL(req.url); } catch { return; }
 
-  // 1. App shell (наш домен) → cache-first
-  if (url.origin === self.location.origin) {
+  // 1. Наш HTML / навигация → NETWORK-FIRST (всегда свежая версия!)
+  if (url.origin === self.location.origin &&
+      (req.mode === 'navigate' ||
+       url.pathname === '/' ||
+       url.pathname === '/index.html' ||
+       url.pathname.endsWith('.html') ||
+       url.pathname.endsWith('.webmanifest') ||
+       url.pathname.endsWith('.txt') ||
+       url.pathname.endsWith('.xml'))) {
     event.respondWith(
-      caches.match(req).then(cached => {
-        return cached || fetch(req).then(resp => {
-          // Кэшируем навигационные запросы как index.html
-          const toCache = req.mode === 'navigate' ? './index.html' : req;
-          if (resp.ok) {
-            const clone = resp.clone();
-            caches.open(STATIC_CACHE).then(c => c.put(toCache, clone));
-          }
-          return resp;
-        }).catch(() => caches.match('./index.html'));
-      })
+      fetch(req).then(resp => {
+        if (resp.ok) {
+          const clone = resp.clone();
+          caches.open(STATIC_CACHE).then(c => c.put(req, clone));
+        }
+        return resp;
+      }).catch(() => caches.match(req).then(cached => cached || caches.match('./index.html')))
     );
     return;
   }
@@ -98,14 +101,10 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       caches.open(IMG_CACHE).then(cache =>
         cache.match(req).then(cached => {
-          // Фоновое обновление
           const network = fetch(req).then(resp => {
-            if (resp.ok) {
-              cache.put(req, resp.clone());
-            }
+            if (resp.ok) cache.put(req, resp.clone());
             return resp;
-          }).catch(() => cached); // если оффлайн и нет в кэше — вернём cached (может быть undefined)
-          // Сначала из кэша, потом из сети
+          }).catch(() => cached);
           return cached || network;
         })
       )
@@ -113,10 +112,11 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 3. YouTube / Google Maps iframe → network-first, fallback в кэш
+  // 3. YouTube / Google Maps → network-first
   if (url.hostname.includes('youtube.com') ||
+      url.hostname.includes('youtube-nocookie.com') ||
       url.hostname.includes('google.com/maps') ||
-      url.hostname.includes('youtube-nocookie.com')) {
+      url.hostname.includes('maps.google')) {
     event.respondWith(
       fetch(req).then(resp => {
         if (resp.ok) {
@@ -129,13 +129,25 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 4. Остальное → пробуем сеть, fallback в кэш
-  event.respondWith(
-    fetch(req).catch(() => caches.match(req))
-  );
+  // 4. Остальные same-origin ресурсы → stale-while-revalidate
+  if (url.origin === self.location.origin) {
+    event.respondWith(
+      caches.match(req).then(cached => {
+        const network = fetch(req).then(resp => {
+          if (resp.ok) {
+            const clone = resp.clone();
+            caches.open(STATIC_CACHE).then(c => c.put(req, clone));
+          }
+          return resp;
+        }).catch(() => cached);
+        return cached || network;
+      })
+    );
+    return;
+  }
 });
 
-/* ---------- Управление обновлениями: уведомляем клиентов ---------- */
+/* ---------- Управление обновлениями ---------- */
 self.addEventListener('message', (event) => {
   if (event.data === 'SKIP_WAITING') {
     self.skipWaiting();
