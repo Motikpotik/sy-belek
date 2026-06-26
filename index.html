@@ -1506,6 +1506,18 @@
     .more-item { padding: 10px 12px; font-size: 0.82em; }
   }
 
+  /* ---------- Телефон: скрываем «optional» вкладки, «Ещё» всегда видна ---------- */
+  @media (max-width: 600px) {
+    .tab-btn.tab-optional { display: none; }  /* Номера, Еда, Отзывы — в меню «Ещё» */
+    .tab-btn.tab-more {
+      flex-shrink: 0;          /* никогда не сжимается */
+      margin-left: auto;       /* прижимаем к правому краю */
+      background: rgba(212, 175, 55, 0.2);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+    }
+    .tab-list { overflow: visible; }  /* убираем горизонтальный скролл — всё помещается */
+  }
+
   /* (баннер «обновление доступно» удалён — SW v3 обновляет HTML автоматически через network-first) */
 
   /* ---------- 42. Мини-карта территории отеля ---------- */
@@ -1734,11 +1746,11 @@
 <div class="brand">★ SY BELEK</div>
 <div class="tab-list" role="tablist">
 <button aria-controls="panel-overview" aria-selected="true" class="tab-btn active" data-tab="overview" role="tab">Обзор</button>
-<button aria-controls="panel-rooms" aria-selected="false" class="tab-btn" data-tab="rooms" role="tab">Номера</button>
+<button aria-controls="panel-rooms" aria-selected="false" class="tab-btn tab-optional" data-tab="rooms" role="tab">Номера</button>
 <button aria-controls="panel-slides" aria-selected="false" class="tab-btn" data-tab="slides" role="tab">Горки</button>
 <button aria-controls="panel-pools" aria-selected="false" class="tab-btn" data-tab="pools" role="tab">Бассейны</button>
-<button aria-controls="panel-food" aria-selected="false" class="tab-btn" data-tab="food" role="tab">Еда</button>
-<button aria-controls="panel-reviews" aria-selected="false" class="tab-btn" data-tab="reviews" role="tab">Отзывы</button>
+<button aria-controls="panel-food" aria-selected="false" class="tab-btn tab-optional" data-tab="food" role="tab">Еда</button>
+<button aria-controls="panel-reviews" aria-selected="false" class="tab-btn tab-optional" data-tab="reviews" role="tab">Отзывы</button>
 <button aria-label="Показать все разделы" class="tab-btn tab-more" id="moreTrigger" role="button">☰ Ещё</button>
 </div>
 </div>
@@ -4300,6 +4312,12 @@ function switchTab(target) {
   if (btn) {
     btn.classList.add('active');
     btn.setAttribute('aria-selected', 'true');
+  }
+  // На телефоне: если активная вкладка скрыта (display:none), подсветим «Ещё»
+  const moreBtn = document.getElementById('moreTrigger');
+  if (moreBtn) {
+    const isHidden = btn && getComputedStyle(btn).display === 'none';
+    moreBtn.classList.toggle('active', isHidden);
   }
   if (panel) {
     panel.classList.add('active');
