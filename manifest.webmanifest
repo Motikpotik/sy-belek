@@ -1,0 +1,60 @@
+{
+  "name": "SY Hotels Belek — Обзор эксперта",
+  "short_name": "SY Belek",
+  "description": "Независимый обзор SY Hotels Belek 5★ от эксперта с 20-летним стажем. TripAdvisor 4.3/5, 14 горок Mega Splash, 4 бассейна, импортный алкоголь.",
+  "lang": "ru",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0a0a14",
+  "theme_color": "#0a0a14",
+  "categories": ["travel", "lifestyle", "news"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "🏆 Обзор и вердикт",
+      "short_name": "Обзор",
+      "url": "./index.html#panel-overview",
+      "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "🎢 Mega Splash 14 горок",
+      "short_name": "Горки",
+      "url": "./index.html#panel-slides",
+      "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "🛏 Номера",
+      "short_name": "Номера",
+      "url": "./index.html#panel-rooms",
+      "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "💬 Отзывы",
+      "short_name": "Отзывы",
+      "url": "./index.html#panel-reviews",
+      "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]
+    }
+  ]
+}
