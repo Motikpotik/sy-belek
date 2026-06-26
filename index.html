@@ -1501,6 +1501,114 @@
   }
 
   /* (баннер «обновление доступно» удалён — SW v3 обновляет HTML автоматически через network-first) */
+
+  /* ---------- 42. Мини-карта территории отеля ---------- */
+  .hotel-map-wrap {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 16px; padding: 20px;
+    margin-top: 18px; overflow: hidden;
+  }
+  .hotel-map-svg {
+    width: 100%; height: auto; max-width: 720px;
+    display: block; margin: 0 auto;
+    background: linear-gradient(135deg, #0d1a2a 0%, #142540 100%);
+    border-radius: 12px;
+  }
+  .hotel-map-legend {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px; margin-top: 14px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(212,175,55,0.15);
+    border-radius: 8px;
+    font-size: 0.82em;
+    transition: 0.3s; cursor: pointer;
+  }
+  .legend-item:hover {
+    background: rgba(212,175,55,0.1);
+    border-color: rgba(212,175,55,0.4);
+    transform: translateX(4px);
+  }
+  .legend-item .dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    flex-shrink: 0; box-shadow: 0 0 8px currentColor;
+  }
+  .legend-item .label { color: rgba(232,232,239,0.85); }
+  /* SVG стили для карты */
+  .map-marker { cursor: pointer; transition: 0.3s; }
+  .map-marker:hover { transform: scale(1.2); transform-origin: center; }
+  .map-marker circle { filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5)); }
+  .map-marker text { font-family: -apple-system, sans-serif; font-weight: 700; pointer-events: none; }
+
+  /* ---------- 43. Фото-точки ---------- */
+  .photospot-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px; margin-top: 18px;
+  }
+  .photospot-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 14px; overflow: hidden;
+    transition: 0.3s;
+    position: relative;
+  }
+  .photospot-card:hover {
+    border-color: rgba(212,175,55,0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 24px rgba(212,175,55,0.2);
+  }
+  .photospot-image {
+    aspect-ratio: 4/3;
+    background-size: cover; background-position: center;
+    position: relative;
+  }
+  .photospot-image::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(10,10,20,0.85));
+  }
+  .photospot-num {
+    position: absolute; top: 12px; left: 12px; z-index: 2;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, #d4af37, #f5b700);
+    color: #0a0a14; font-weight: 900; font-size: 0.95em;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 12px rgba(212,175,55,0.5);
+  }
+  .photospot-info {
+    padding: 16px;
+    position: relative; z-index: 2;
+    margin-top: -50px;
+  }
+  .photospot-info h4 {
+    color: #fff5b7; font-size: 1.05em; margin-bottom: 6px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  }
+  .photospot-meta {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 8px; font-size: 0.78em;
+  }
+  .photospot-meta span {
+    background: rgba(212,175,55,0.15);
+    border: 1px solid rgba(212,175,55,0.3);
+    color: #d4af37;
+    padding: 3px 10px; border-radius: 100px;
+    font-weight: 600;
+  }
+  .photospot-info p {
+    color: rgba(232,232,239,0.85); font-size: 0.86em; line-height: 1.5;
+  }
+  .photospot-tip {
+    margin-top: 10px; padding: 8px 12px;
+    background: rgba(212,175,55,0.08);
+    border-left: 3px solid #d4af37;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.82em; color: rgba(232,232,239,0.75);
+  }
+  .photospot-tip strong { color: #d4af37; }
 </style>
 </head>
 <body>
@@ -3369,194 +3477,569 @@
 </div>
 </div>
 </section>
-<!-- ==================== TAB 19: KIDS ==================== -->
+<!-- ==================== TAB 19: TEENS (10-13 лет) ==================== -->
 <section aria-labelledby="tab-kids" class="tab-panel" data-panel="kids" hidden="" id="panel-kids" role="tabpanel">
 <div class="container">
 <div class="panel-section">
-<h2 class="section-title reveal">👶 Детский раздел</h2>
-<p class="subtitle reveal">Всё для семей с детьми: Mini Club, безопасность, меню, чек-лист чемодана, игры в дорогу</p>
+<h2 class="section-title reveal">🛹 Подросткам 10-13 лет</h2>
+<p class="subtitle reveal">Что делать тинейджеру в SY Hotels Belek: экстрим-горки, спорт, вечеринки, безопасная самостоятельность</p>
 
 <div class="weather-intro reveal">
-<h3>🎉 Что отель предлагает детям бесплатно</h3>
-<p>SY Hotels Belek — семейный отель. Дети остаются бесплатно (Kids stay free!), большая программа анимации.</p>
+<h3>🔥 Что отель предлагает подросткам</h3>
+<p>10-13 лет — возраст, когда хочется самостоятельности и драйва. Отель даёт достаточно: 14 горок разного уровня экстрима, спорт, квесты, подростковые вечера. Базовая анимация для малышей вам уже не нужна — ищите приключения.</p>
 </div>
 
 <div class="kids-grid">
 <div class="kids-card reveal" data-delay="1">
-<span class="kids-emoji">🎪</span>
-<h4>Mini Club 4-12 лет</h4>
-<p>Профессиональная команда аниматоров: Эсра, Шейма, Хасрет. Программа 10:00-12:00 и 14:00-17:00. Дети в восторге, родители отдыхают.</p>
+<span class="kids-emoji">🎢</span>
+<h4>Экстрим-горки Mega Splash</h4>
+<p>Из 14 горок аквапарка подростку 10-13 лет будут интересны: <strong style="color:#d4af37;">Hill Slide</strong> (35.96 м, экстрим), <strong style="color:#d4af37;">Body Slide Combo</strong> (60-80 м, экстрим) и Body Slide (36-54 м, средне). Адреналин гарантирован.</p>
 <ul>
-<li>Рисование, лепка, поделки</li>
-<li>Игры у бассейна</li>
-<li>Мини-диско каждый вечер 21:00</li>
-<li>Квесты по отелю</li>
-<li>Пиратские и гавайские вечеринки</li>
+<li>Рост от 120 см — на все горки</li>
+<li>Спасатель на посту 10:00-17:00</li>
+<li>Очередь на популярные — 5-15 мин</li>
+<li>Бери напрокат жилеты (бесплатно)</li>
+<li>Лучшее время — утром (нет очередей)</li>
+<li>Вейв-пул после 14:00 (волны круче)</li>
 </ul>
 </div>
 <div class="kids-card reveal" data-delay="2">
-<span class="kids-emoji">🏊</span>
-<h4>Детский бассейн + горки</h4>
-<p>Отдельная зона с мелким бассейном (глубина 30 см) и 4 детскими горками: 2 Kids Slide Str (9-19 м) и 2 Kids Slide Crv (12-18 м). Возраст 3-10 лет.</p>
+<span class="kids-emoji">🎯</span>
+<h4>Спорт и состязания</h4>
+<p>Команда анимации устраивает ежедневные турниры — подросткам 10-13 лет самое то. Призы — коктейли (безалкогольные), футболки отеля, бесплатные экскурсии.</p>
 <ul>
-<li>Спасатель на посту 10:00-17:00</li>
-<li>Бесплатные жилеты (в залог — карточка отеля)</li>
-<li>Тень от навесов</li>
-<li>Близко к бару с мороженым</li>
+<li>Стрельба из лука (15:00) — с 10 лет</li>
+<li>Пневматическая винтовка (15:00) — с 12 лет</li>
+<li>Дартс и бочче (12:00) — для всех</li>
+<li>Водное поло (11:00) — подростковая команда</li>
+<li>Пляжный волейбол (16:00)</li>
+<li>Турниры с призами в субботу</li>
 </ul>
 </div>
 <div class="kids-card reveal" data-delay="3">
-<span class="kids-emoji">🍦</span>
-<h4>Детское меню</h4>
-<p>В ресторане Sirius — отдельный детский уголок. Также полдник 15:00-17:00 с гёдёме (турецкие пончики) и мороженым.</p>
+<span class="kids-emoji">🎭</span>
+<h4>Вечерние шоу и дискотеки</h4>
+<p>С 21:00 — подростковая дискотека (отдельная зона от малышей). С 21:30 — шоу для всех. Темы вечеров: пиратская, гавайская, неоновая, карнавал.</p>
 <ul>
-<li>Макароны, пицца, куриные наггетсы</li>
-<li>Картошка фри, овощи</li>
-<li>Соки, молоко, какао</li>
-<li>Мороженое 5 видов</li>
-<li>Свежие фрукты 3 раза в день</li>
+<li>Неоновая вечеринка (вторник) — берите светлую одежду</li>
+<li>Пиратская ночь (четверг) — призы за костюмы</li>
+<li>Караоке-баттл (среда)</li>
+<li>Файер-шоу (пятница)</li>
+<li>Live-музыка (суббота)</li>
+<li>Бар с безалкогольными коктейлями — до 23:00</li>
 </ul>
 </div>
 <div class="kids-card reveal" data-delay="4">
 <span class="kids-emoji">🛏</span>
 <h4>Семейные номера</h4>
-<p>Deluxe Family (43 м²) и Duplex Family (39 м², 2 этажа). Дети до 12 лет — бесплатно в номере с родителями.</p>
+<p>Deluxe Family (43 м²) и Duplex Family (39 м², 2 этажа). Дети до 12 лет — бесплатно в номере с родителями. Подростку 13 лет — отдельная кровать.</p>
 <ul>
-<li>Дополнительная детская кроватка (0-3 года) — бесплатно</li>
-<li>Сейф в номере</li>
+<li>Двухуровневый Duplex — свой «этаж» для подростка</li>
+<li>Сейф в номере (для ценных вещей)</li>
 <li>Звукоизолированные окна</li>
-<li>Минибар с соками и водой</li>
-<li>Мультики по ТВ (турецкие + английские)</li>
+<li>Wi-Fi бесплатный — для соцсетей и игр</li>
+<li>Минибар с газировкой и водой</li>
+<li>Smart TV — можно подключить свой Netflix</li>
 </ul>
 </div>
 <div class="kids-card reveal" data-delay="5">
 <span class="kids-emoji">🦒</span>
 <h4>The Land of Legends</h4>
-<p>700 м от отеля — крупнейший парк аттракционов Турции. Дельфинарий, аквапарк, 5D-кинотеатр, роликовые горки. Дети будут в восторге.</p>
+<p>700 м от отеля — крупнейший парк аттракционов Турции. Для подростка 10-13 — это рай: роликовые горки Horror Coaster, дельфинарий, 5D-кинотеатр, аквапарк с экстремальными горками.</p>
 <ul>
-<li>Пешком 10 минут</li>
+<li>Пешком 10 минут от отеля</li>
 <li>Билет на день: 35-50 €</li>
-<li>Дети до 6 лет — скидка 50%</li>
-<li>Лучше идти утром (меньше очередей)</li>
-<li>Взять сменную одежду (водные аттракционы)</li>
+<li>Дети 10+ — полный билет</li>
+<li>Horror Coaster — с 11 лет, рост 140+</li>
+<li>5D-кинотеатр — с 7 лет</li>
+<li>Дельфинарий — шоу 3 раза в день</li>
+<li>Совет: иди утром (меньше очередей)</li>
 </ul>
 </div>
 <div class="kids-card reveal" data-delay="6">
 <span class="kids-emoji">🦈</span>
-<h4>Безопасность детей</h4>
-<p>Важные правила для родителей. Отель безопасен, но базовые правила соблюдайте.</p>
+<h4>Самостоятельность и безопасность</h4>
+<p>10-13 лет — возраст, когда можно отпускать подростка одного по территории отеля. Но базовые правила соблюдайте. Договоритесь о контрольных точках.</p>
 <ul>
-<li>Возле бассейна — только с родителями до 12 лет</li>
-<li>На горках — рост от 120 см (детские — от 90 см)</li>
-<li>Солнцезащитный крем SPF 50+ каждые 2 часа</li>
-<li>Панама/кепка обязательно с 11:00 до 16:00</li>
-<li>Не оставляйте детей одних в номере</li>
-<li>Запишите номер ресепшен в телефон ребёнка</li>
+<li>Можно гулять по отелю с 9:00 до 21:00</li>
+<li>На горки — только после инструктажа</li>
+<li>Купание в море — только с родителями</li>
+<li>Wi-Fi по всему отелю — оставайтесь на связи</li>
+<li>Договоритесь о встрече каждые 2 часа</li>
+<li>Запишите номер ресепшен в телефон подростка</li>
+<li>Сейф в номере — для ценных вещей</li>
 </ul>
 </div>
 </div>
 
 <div class="weather-intro reveal" style="margin-top: 28px;">
-<h3>🎮 Игры в дорогу (самолёт/такси)</h3>
-<p>3 часа в самолёте + 1 час такси = нужно чем-то занять ребёнка. Без экрана!</p>
+<h3>📱 Чем заняться в дороге (3-часовой перелёт)</h3>
+<p>Подростку 10-13 лет в самолёте нужны развлечения посерьёзнее, чем раскраски. Вот что реально работает.</p>
 </div>
 
 <div class="checklist-grid">
 <div class="checklist-card reveal" data-delay="1">
-<h4>✏️ Без экрана</h4>
+<h4>🎮 Игры на телефон</h4>
 <ul>
-<li>Раскраска + 6 фломастеров</li>
-<li>Маленький блокнот + карандаши</li>
-<li>Наклейки (дinos/принцессы/животные)</li>
-<li>Магнитные шахматы/шашки</li>
-<li>Карты «Мемори» (45 карточек)</li>
-<li>Книжка с окошками</li>
+<li>Subway Surfers, Brawl Stars, Roblox</li>
+<li>Minecraft, Among Us</li>
+<li>Genshin Impact (если тянет телефон)</li>
+<li>Заранее скачай офлайн-режим</li>
+<li>Headphones беспроводные</li>
+<li>Power bank 20000 mAh</li>
+<li>Зарядный кабель Type-C / Lightning</li>
 </ul>
 </div>
 <div class="checklist-card reveal" data-delay="2">
-<h4>📱 Если с экраном</h4>
+<h4>🎬 Что посмотреть / послушать</h4>
 <ul>
-<li>Скачай мультики заранее (Netflix офлайн)</li>
-<li>Audiocказки (Storytel, Букмейт)</li>
-<li>Toca Boca, Khan Academy Kids</li>
-<li>Headphones (беспроводные)</li>
-<li>Power bank заряженный</li>
-<li>Лимит — 30 минут за раз</li>
+<li>Netflix офлайн — сериал «Очень странные дела»</li>
+<li>YouTube Premium — без рекламы</li>
+<li>Аудиокниги: LitRes, Storytel</li>
+<li>Подкасты про игры/кино</li>
+<li>Скачай 2-3 фильма в 4K</li>
+<li>Музыка офлайн (Spotify Premium)</li>
 </ul>
 </div>
 <div class="checklist-card reveal" data-delay="3">
-<h4>🍪 Снеки (без сахара)</h4>
+<h4>🍿 Снеки</h4>
 <ul>
-<li>Яблочное пюре в паучах</li>
-<li>Овощные чипсы</li>
-<li>Сухофрукты (курага, изюм)</li>
-<li>Орехи (если нет аллергии)</li>
-<li>Вода в маленькой бутылке</li>
+<li>Протеиновые батончики</li>
+<li>Орехи (миндаль, кешью)</li>
+<li>Сухофрукты (курага, инжир)</li>
+<li>Чипсы (в упаковке, не пачкающие)</li>
+<li>Энергетик без кофеина (для подростка)</li>
 <li>Жевательная резинка (при взлёте)</li>
+<li>Вода 0.5 л (пустая — налить после досмотра)</li>
+</ul>
+</div>
+<div class="checklist-card reveal" data-delay="4">
+<h4>🎲 Настольное (для компании)</h4>
+<ul>
+<li>Обычные карты (Дурак, Уно)</li>
+<li>Магнитные шахматы / шашки</li>
+<li>Дайс (кубики) — для D&D</li>
+<li>Тетрадь + ручка для «Морского боя»</li>
+<li>Sudoku / кроссворды</li>
+<li>Маленький блокнот для зарисовок</li>
 </ul>
 </div>
 </div>
 
 <div class="weather-intro reveal" style="margin-top: 28px;">
-<h3>🎯 Чек-лист чемодана для ребёнка</h3>
-<p>Сохраните, чтобы не забыть самое важное для детей 4-12 лет.</p>
+<h3>🎒 Чек-лист чемодана подростка 10-13 лет</h3>
+<p>Подросток может собрать чемодан сам — но сверьтесь с этим списком. На 7 дней.</p>
 </div>
 
 <div class="checklist-grid">
 <div class="checklist-card reveal" data-delay="1">
 <h4>👕 Одежда (7 дней)</h4>
 <ul>
-<li>5 футболок</li>
-<li>3 шорта / 1 штаны</li>
-<li>2 купальника / плавки</li>
+<li>5 футболок + 2 лонгслива</li>
+<li>3 шорта + 1 штаны/джинсы</li>
+<li>2 купальных шорт / купальник</li>
 <li>Шлёпанцы + кроссовки</li>
-<li>Панама / кепка (обязательно!)</li>
-<li>Солнцезащитные очки детские</li>
+<li>Кепка / панама (SPF!)</li>
+<li>Солнцезащитные очки</li>
 <li>Лёгкая куртка (кондиционеры)</li>
-<li>Пижама</li>
+<li>Носки 4 пары, бельё 7 шт.</li>
 </ul>
 </div>
 <div class="checklist-card reveal" data-delay="2">
-<h4>🧴 Гигиена</h4>
+<h4>📱 Электроника</h4>
 <ul>
-<li>Детский шампунь 2-в-1</li>
-<li>Детский крем от солнца SPF 50+</li>
-<li>Влажные салфетки (2 пачки)</li>
-<li>Зубная щётка + паста детская</li>
-<li>Расчёска</li>
-<li>Полотенце маленькое (для бассейна)</li>
-<li>Подгузники (если нужно) + 3 запаса</li>
+<li>Телефон + зарядка</li>
+<li>Power bank 10000-20000 mAh</li>
+<li>Наушники беспроводные</li>
+<li>Адаптер Type F → USB / USB-C</li>
+<li>Планшет / ноутбук (опц.)</li>
+<li>Гермочехол для бассейна</li>
+<li>Кабели Type-C / Lightning (2 шт.)</li>
+<li>Селфи-палка / штатив</li>
 </ul>
 </div>
 <div class="checklist-card reveal" data-delay="3">
-<h4>💊 Аптечка детская</h4>
+<h4>🧴 Гигиена и косметика</h4>
 <ul>
-<li>Нурофен детский (сироп/таблетки)</li>
-<li>Парацетамол детский</li>
-<li>Смекта / полисорб (отравление)</li>
-<li>Антигистаминное (зиртек капли)</li>
-<li>Бинт, пластыри с мультиками</li>
-<li>Антисептик</li>
-<li>Капли в нос (аквамарис)</li>
-<li>Термометр электронный</li>
+<li>Шампунь + гель 2-в-1</li>
+<li>Крем от солнца SPF 50+</li>
+<li>Дезодорант (подростку обязательно!)</li>
+<li>Зубная щётка + паста</li>
+<li>Влажные салфетки (1 пачка)</li>
+<li>Бритва (если уже бреется)</li>
+<li>Расчёска / гель для укладки</li>
+<li>Крем после загара (пантенол)</li>
 </ul>
 </div>
 <div class="checklist-card reveal" data-delay="4">
-<h4>🧸 Любимое</h4>
+<h4>💊 Аптечка</h4>
 <ul>
-<li>Любимая игрушка / плед</li>
-<li>Пустышка (если ещё с ней)</li>
-<li>Маленький рюкзак для Mini Club</li>
-<li>Бутылка/поилка непроливайка</li>
-<li>Купальник с защитой от солнца</li>
-<li>Круг/нарукавники для бассейна</li>
-<li>Браслет с номером телефона родителя</li>
+<li>Парацетамол / нурофен (от головной боли)</li>
+<li>Смекта / полисорб (отравление)</li>
+<li>Антигистаминное (зиртек)</li>
+<li>Пантенол спрей (ожоги)</li>
+<li>Пластыри бактерицидные</li>
+<li>Антисептик</li>
+<li>Бинт эластичный</li>
+<li>Личные лекарства (если есть)</li>
+</ul>
+</div>
+<div class="checklist-card reveal" data-delay="5">
+<h4>🎒 Своё в рюкзаке</h4>
+<ul>
+<li>Рюкзак городской 20-25 л</li>
+<li>Бутылка-непроливайка 0.7 л</li>
+<li>Солнцезащитные очки</li>
+<li>Купальные шорты (внезапный бассейн)</li>
+<li>Небольшая сумма наличными (200-300 ₺)</li>
+<li>Наушники</li>
+<li>Ключ-карта от номера (если выдают)</li>
+<li>Запасная маска для телефона</li>
+</ul>
+</div>
+<div class="checklist-card reveal" data-delay="6">
+<h4>🎯 Личное и развлекательное</h4>
+<ul>
+<li>Наушники беспроводные</li>
+<li>Книга / электронная книга</li>
+<li>Блокнот + ручка</li>
+<li>Карты Уно / обычные</li>
+<li>Свои наушники для самолёта</li>
+<li>Селфи-палка</li>
+<li>Небольшой блокнот для зарисовок</li>
+<li>Подростковый парфюм (опц.)</li>
+</ul>
+</div>
+</div>
+
+<div class="weather-intro reveal" style="margin-top: 28px;">
+<h3>🚨 Безопасность подростка 10-13 лет</h3>
+<p>Подросток в отпуске хочет свободы — и это нормально. Но договоритесь о правилах заранее.</p>
+</div>
+
+<div class="checklist-grid">
+<div class="checklist-card reveal" data-delay="1">
+<h4>📍 Геолокация и связь</h4>
+<ul>
+<li>Включить «Найти iPhone» / Find My</li>
+<li>Установить Family Link на Android</li>
+<li>Договориться о контрольных звонках</li>
+<li>Wi-Fi по отелю — постоянно на связи</li>
+<li>Гео-зона: только территория отеля</li>
+<li>Возврат в номер к 22:00</li>
+</ul>
+</div>
+<div class="checklist-card reveal" data-delay="2">
+<h4>🏖 Пляж и море</h4>
+<ul>
+<li>Купаться только с родителями (до 14 лет)</li>
+<li>Не заплывать за буйки</li>
+<li>Спасательный жилет — обязательно</li>
+<li>Солнцезащитный крем SPF 50+ каждые 2 часа</li>
+<li>Панама / кепка с 11:00 до 16:00</li>
+<li>Вода 1.5 л — пить регулярно</li>
+</ul>
+</div>
+<div class="checklist-card reveal" data-delay="3">
+<h4>🎢 Аквапарк</h4>
+<ul>
+<li>Соблюдать ростовые ограничения на горках</li>
+<li>Не толкаться в очереди</li>
+<li>Не съезжать «паровозиком» (опасно!)</li>
+<li>Слушать инструктаж спасателя</li>
+<li>Бассейн после горок — 10 сек. всплытия</li>
+<li>Не плавать в одежде (мокрая = тяжелая)</li>
 </ul>
 </div>
 </div>
 
 <div class="panel-nav">
 <button aria-label="Предыдущая вкладка" class="panel-nav-btn prev" data-prev="week">Назад</button>
+<button aria-label="Следующая вкладка" class="panel-nav-btn next" data-next="map-hotel">Карта отеля →</button>
+</div>
+</div>
+</div>
+</section>
+<!-- ==================== TAB 20: HOTEL MAP (мини-карта территории) ==================== -->
+<section aria-labelledby="tab-map-hotel" class="tab-panel" data-panel="map-hotel" hidden="" id="panel-map-hotel" role="tabpanel">
+<div class="container">
+<div class="panel-section">
+<h2 class="section-title reveal">🗺️ Карта территории отеля</h2>
+<p class="subtitle reveal">Наглядная схема SY Hotels Belek: где бассейн, ресторан, аквапарк, SPA — всё в одном месте</p>
+
+<div class="weather-intro reveal">
+<h3>📍 Как ориентироваться</h3>
+<p>Отель состоит из двух корпусов (A и B) на территории 24 000 м². Главная ось — от ресепшен (вход) до пляжа. Все зоны — в пешей доступности 2-5 минут. На интерактивной карте ниже — основные точки.</p>
+</div>
+
+<div class="hotel-map-wrap reveal-scale">
+<svg class="hotel-map-svg" viewBox="0 0 720 480" xmlns="http://www.w3.org/2000/svg">
+<!-- Фон: трава/песок -->
+<defs>
+<linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#1a3a1a"/>
+<stop offset="1" stop-color="#0d2a0d"/>
+</linearGradient>
+<linearGradient id="poolGrad" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#0d4d6d"/>
+<stop offset="1" stop-color="#1a75a8"/>
+</linearGradient>
+<linearGradient id="bldGrad" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#2a2a3a"/>
+<stop offset="1" stop-color="#1a1a2a"/>
+</linearGradient>
+</defs>
+
+<rect fill="url(#grass)" height="480" width="720" x="0" y="0"/>
+
+<!-- Дорожки (золотые) -->
+<path d="M 60 60 L 660 60 L 660 420 L 60 420 Z" fill="none" stroke="#d4af37" stroke-width="2" stroke-dasharray="4,4" opacity="0.4"/>
+<path d="M 360 60 L 360 420" fill="none" stroke="#d4af37" stroke-width="2" stroke-dasharray="4,4" opacity="0.4"/>
+<path d="M 60 240 L 660 240" fill="none" stroke="#d4af37" stroke-width="2" stroke-dasharray="4,4" opacity="0.4"/>
+
+<!-- Корпус A (слева) -->
+<rect fill="url(#bldGrad)" height="120" rx="6" stroke="#d4af37" stroke-opacity="0.4" stroke-width="1" width="140" x="80" y="80"/>
+<text fill="#f5f5fa" font-family="sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="150" y="145">Корпус A</text>
+
+<!-- Корпус B (справа) -->
+<rect fill="url(#bldGrad)" height="120" rx="6" stroke="#d4af37" stroke-opacity="0.4" stroke-width="1" width="140" x="500" y="80"/>
+<text fill="#f5f5fa" font-family="sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="570" y="145">Корпус B</text>
+
+<!-- Ресепшен (вход) -->
+<rect fill="#4a3a1a" height="50" rx="6" stroke="#d4af37" stroke-width="2" width="100" x="310" y="20"/>
+<text fill="#d4af37" font-family="sans-serif" font-size="12" font-weight="700" text-anchor="middle" x="360" y="50">РЕСЕПШЕН</text>
+
+<!-- Maldives Pool (центр, большой) -->
+<ellipse cx="360" cy="240" fill="url(#poolGrad)" rx="100" ry="60" stroke="#fff" stroke-opacity="0.3" stroke-width="2"/>
+<text fill="#fff5b7" font-family="sans-serif" font-size="12" font-weight="700" text-anchor="middle" x="360" y="245">Maldiv Pool</text>
+
+<!-- Outdoor Pool A Block (слева внизу) -->
+<ellipse cx="160" cy="350" fill="url(#poolGrad)" rx="60" ry="40" stroke="#fff" stroke-opacity="0.3" stroke-width="2"/>
+<text fill="#fff5b7" font-family="sans-serif" font-size="10" font-weight="700" text-anchor="middle" x="160" y="355">Outdoor Pool A</text>
+
+<!-- Outdoor Pool B Block (справа внизу) -->
+<ellipse cx="560" cy="350" fill="url(#poolGrad)" rx="60" ry="40" stroke="#fff" stroke-opacity="0.3" stroke-width="2"/>
+<text fill="#fff5b7" font-family="sans-serif" font-size="10" font-weight="700" text-anchor="middle" x="560" y="355">Outdoor Pool B</text>
+
+<!-- Аквапарк (справа) -->
+<rect fill="#4a1a1a" height="80" rx="6" stroke="#ff8a8a" stroke-opacity="0.5" stroke-width="2" width="100" x="580" y="180"/>
+<text fill="#ff8a8a" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="630" y="215">Mega Splash</text>
+<text fill="#ff8a8a" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="630" y="232">Aquapark</text>
+
+<!-- Sirius Restaurant (центр внизу) -->
+<rect fill="#3a2a1a" height="50" rx="6" stroke="#d4af37" stroke-opacity="0.5" stroke-width="1" width="100" x="310" y="380"/>
+<text fill="#d4af37" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="360" y="410">Sirius Restaurant</text>
+
+<!-- SPA (слева от центра) -->
+<rect fill="#2a1a3a" height="60" rx="6" stroke="#a87ed4" stroke-opacity="0.5" stroke-width="1" width="80" x="220" y="180"/>
+<text fill="#a87ed4" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="260" y="215">SPA</text>
+
+<!-- Larimar Beach Bar (правее центра) -->
+<rect fill="#1a3a4a" height="60" rx="6" stroke="#7ec5ea" stroke-opacity="0.5" stroke-width="1" width="80" x="420" y="180"/>
+<text fill="#7ec5ea" font-family="sans-serif" font-size="10" font-weight="700" text-anchor="middle" x="460" y="215">Larimar</text>
+
+<!-- Маркеры с номерами -->
+<g class="map-marker"><circle cx="360" cy="45" fill="#d4af37" r="10"/><text fill="#0a0a14" font-size="11" text-anchor="middle" x="360" y="49">1</text></g>
+<g class="map-marker"><circle cx="360" cy="240" fill="#00d4ff" r="10"/><text fill="#0a0a14" font-size="11" text-anchor="middle" x="360" y="244">2</text></g>
+<g class="map-marker"><circle cx="160" cy="350" fill="#00d4ff" r="10"/><text fill="#0a0a14" font-size="11" text-anchor="middle" x="160" y="354">3</text></g>
+<g class="map-marker"><circle cx="560" cy="350" fill="#00d4ff" r="10"/><text fill="#0a0a14" font-size="11" text-anchor="middle" x="560" y="354">4</text></g>
+<g class="map-marker"><circle cx="630" cy="210" fill="#ff8a8a" r="10"/><text fill="#0a0a14" font-size="11" text-anchor="middle" x="630" y="214">5</text></g>
+<g class="map-marker"><circle cx="360" cy="405" fill="#ffd97e" r="10"/><text fill="#0a0a14" font-size="11" text-anchor="middle" x="360" y="409">6</text></g>
+<g class="map-marker"><circle cx="260" cy="210" fill="#a87ed4" r="10"/><text fill="#0a0a14" font-size="11" text-anchor="middle" x="260" y="214">7</text></g>
+<g class="map-marker"><circle cx="460" cy="210" fill="#7ec5ea" r="10"/><text fill="#0a0a14" font-size="11" text-anchor="middle" x="460" y="214">8</text></g>
+<g class="map-marker"><circle cx="150" cy="140" fill="#fff" r="10"/><text fill="#0a0a14" font-size="11" text-anchor="middle" x="150" y="144">9</text></g>
+<g class="map-marker"><circle cx="570" cy="140" fill="#fff" r="10"/><text fill="#0a0a14" font-size="11" text-anchor="middle" x="570" y="144">10</text></g>
+
+<!-- Компас -->
+<g transform="translate(680, 440)">
+<circle cx="0" cy="0" fill="rgba(0,0,0,0.5)" r="22" stroke="#d4af37" stroke-width="1"/>
+<text fill="#d4af37" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="0" y="-6">N</text>
+<text fill="rgba(232,232,239,0.5)" font-family="sans-serif" font-size="9" text-anchor="middle" x="0" y="14">S</text>
+</g>
+
+<!-- Масштаб -->
+<text fill="rgba(232,232,239,0.4)" font-family="sans-serif" font-size="10" x="20" y="465">⚠ Схема ориентировочная, не в масштабе</text>
+</svg>
+
+<div class="hotel-map-legend">
+<div class="legend-item"><span class="dot" style="background:#d4af37;color:#d4af37"></span><span class="label">1. Ресепшен / вход</span></div>
+<div class="legend-item"><span class="dot" style="background:#00d4ff;color:#00d4ff"></span><span class="label">2. Maldives Pool (белый песок)</span></div>
+<div class="legend-item"><span class="dot" style="background:#00d4ff;color:#00d4ff"></span><span class="label">3. Outdoor Pool A Block</span></div>
+<div class="legend-item"><span class="dot" style="background:#00d4ff;color:#00d4ff"></span><span class="label">4. Outdoor Pool B Block</span></div>
+<div class="legend-item"><span class="dot" style="background:#ff8a8a;color:#ff8a8a"></span><span class="label">5. Mega Splash Aquapark</span></div>
+<div class="legend-item"><span class="dot" style="background:#ffd97e;color:#ffd97e"></span><span class="label">6. Sirius Restaurant</span></div>
+<div class="legend-item"><span class="dot" style="background:#a87ed4;color:#a87ed4"></span><span class="label">7. SPA &amp; Wellness</span></div>
+<div class="legend-item"><span class="dot" style="background:#7ec5ea;color:#7ec5ea"></span><span class="label">8. Larimar Beach Bar</span></div>
+<div class="legend-item"><span class="dot" style="background:#fff;color:#fff"></span><span class="label">9. Корпус A (номера)</span></div>
+<div class="legend-item"><span class="dot" style="background:#fff;color:#fff"></span><span class="label">10. Корпус B (номера)</span></div>
+</div>
+</div>
+
+<div class="weather-intro reveal" style="margin-top: 28px;">
+<h3>🚶 Расстояния и время</h3>
+<p>Территория компактная — всё в 2-5 минутах ходьбы. Шлёпанцы можно не снимать.</p>
+</div>
+
+<div class="price-grid">
+<div class="price-item reveal"><span class="name">Ресепшен → Maldiv Pool</span><span class="price">~1 мин</span></div>
+<div class="price-item reveal"><span class="name">Maldiv Pool → Аквапарк</span><span class="price">~2 мин</span></div>
+<div class="price-item reveal"><span class="name">Корпус A → Sirius Restaurant</span><span class="price">~3 мин</span></div>
+<div class="price-item reveal"><span class="name">Корпус B → SPA</span><span class="price">~4 мин</span></div>
+<div class="price-item reveal"><span class="name">Отель → Пляж</span><span class="price">2 км (шаттл 4 мин)</span></div>
+<div class="price-item reveal"><span class="name">Отель → The Land of Legends</span><span class="price">700 м (10 мин пешком)</span></div>
+<div class="price-item reveal"><span class="name">Отель → Аэропорт Antalya</span><span class="price">29 км (44 мин такси)</span></div>
+<div class="price-item reveal"><span class="name">Отель → Kadriye (рынок)</span><span class="price">10 мин долмушем</span></div>
+</div>
+
+<div class="panel-nav">
+<button aria-label="Предыдущая вкладка" class="panel-nav-btn prev" data-prev="kids">Назад</button>
+<button aria-label="Следующая вкладка" class="panel-nav-btn next" data-next="photospots">Фото-точки →</button>
+</div>
+</div>
+</div>
+</section>
+<!-- ==================== TAB 21: PHOTO SPOTS (фото-точки) ==================== -->
+<section aria-labelledby="tab-photospots" class="tab-panel" data-panel="photospots" hidden="" id="panel-photospots" role="tabpanel">
+<div class="container">
+<div class="panel-section">
+<h2 class="section-title reveal">📷 Фото-точки — где сделать лучшие кадры</h2>
+<p class="subtitle reveal">Топ-5 мест для Insta-фото в SY Hotels Belek: с примерами, временем суток и советами</p>
+
+<div class="weather-intro reveal">
+<h3>📸 Как пользоваться этим разделом</h3>
+<p>5 локаций с проверенными ракурсами. Для каждого — лучшее время, подсказка по композиции и пример кадра. Сохраните в избранное (★) перед поездкой.</p>
+</div>
+
+<div class="photospot-grid">
+
+<div class="photospot-card reveal" data-delay="1">
+<div class="photospot-image" style="background-image: url('https://syhotels.com/wp-content/uploads/maldiv-havuz-1.webp');">
+<div class="photospot-num">1</div>
+</div>
+<div class="photospot-info">
+<h4>🏝 Maldives Pool с белым песком</h4>
+<div class="photospot-meta">
+<span>⏰ 17:00-19:00</span>
+<span>📍 Центр отеля</span>
+<span>📱 Вертикальный</span>
+</div>
+<p>Фирменная фишка отеля — бассейн с белоснежным песком и пальмами. Закатное освещение даёт золотистый отблеск на воде и песке.</p>
+<div class="photospot-tip"><strong>💡 Совет:</strong> Снимай с низкой точки, чтобы захватить песок + бассейн + пальмы. Вертикальный формат для Stories/Reels.</div>
+</div>
+</div>
+
+<div class="photospot-card reveal" data-delay="2">
+<div class="photospot-image" style="background-image: url('https://syhotels.com/wp-content/uploads/aquapark-1.webp');">
+<div class="photospot-num">2</div>
+</div>
+<div class="photospot-info">
+<h4>🎢 Mega Splash сверху</h4>
+<div class="photospot-meta">
+<span>⏰ 10:00-12:00</span>
+<span>📍 Аквапарк</span>
+<span>📱 Панорама</span>
+</div>
+<p>Лучший ракурс — с верхней площадки Hill Slide. Виден весь аквапарк, бассейны, корпус отеля на фоне. Утром меньше людей в кадре.</p>
+<div class="photospot-tip"><strong>💡 Совет:</strong> Сними панораму 360° с верхней точки Hill Slide. Солнце за спиной — лучшие цвета.</div>
+</div>
+</div>
+
+<div class="photospot-card reveal" data-delay="3">
+<div class="photospot-image" style="background-image: url('https://syhotels.com/wp-content/uploads/sahil-1.webp');">
+<div class="photospot-num">3</div>
+</div>
+<div class="photospot-info">
+<h4>🌅 Закат на пляже</h4>
+<div class="photospot-meta">
+<span>⏱ 19:30-20:30</span>
+<span>📍 Пляж (шаттл)</span>
+<span>📱 Вертикальный</span>
+</div>
+<p>Закат над Средиземным морем — обязательный кадр. Силуэты пальм + оранжевое небо + отражение в воде. Шаттл до пляжа каждые 4 минуты.</p>
+<div class="photospot-tip"><strong>💡 Совет:</strong> Приходи за 20 минут до заката. Снимай силуэты людей у воды — самый эффектный кадр.</div>
+</div>
+</div>
+
+<div class="photospot-card reveal" data-delay="4">
+<div class="photospot-image" style="background-image: url('https://syhotels.com/wp-content/uploads/deluxe-swimup-rooms-1.webp');">
+<div class="photospot-num">4</div>
+</div>
+<div class="photospot-info">
+<h4>🏊 Swim-Up номер с выходом в бассейн</h4>
+<div class="photospot-meta">
+<span>⏱ Утро 8:00-10:00</span>
+<span>📍 Корпус A</span>
+<span>📱 Горизонтальный</span>
+</div>
+<p>Если у вас номер Swim-Up — обязательно снимите утренний кадр из двери номера прямо в бассейн. Свет мягкий, вода спокойная, нет людей.</p>
+<div class="photospot-tip"><strong>💡 Совет:</strong> Снимай из номера outward (наружу). Дверь + бассейн + пальмы — идеальная композиция.</div>
+</div>
+</div>
+
+<div class="photospot-card reveal" data-delay="5">
+<div class="photospot-image" style="background-image: url('https://syhotels.com/wp-content/uploads/hamam-1.webp');">
+<div class="photospot-num">5</div>
+</div>
+<div class="photospot-info">
+<h4>🧖 Турецкий хаммам (мраморный зал)</h4>
+<div class="photospot-meta">
+<span>⏱ 14:00-16:00</span>
+<span>📍 SPA-центр</span>
+<span>📱 Вертикальный</span>
+</div>
+<p>Мраморный зал хаммама с куполом — атмосферный кадр в «восточном» стиле. Лучше снимать днём, когда свет проходит через купол.</p>
+<div class="photospot-tip"><strong>💡 Совет:</strong> Спроси разрешение у персонала. Снимай с нижней точки, чтобы захватить купол. Без вспышки!</div>
+</div>
+</div>
+
+</div>
+
+<div class="weather-intro reveal" style="margin-top: 28px;">
+<h3>📱 Лайфхаки для фото</h3>
+<p>5 универсальных советов, чтобы кадры в отпуске выглядели профессионально.</p>
+</div>
+
+<div class="checklist-grid">
+<div class="checklist-card reveal" data-delay="1">
+<h4>🌅 Свет — главное</h4>
+<ul>
+<li>«Золотой час»: час после рассвета и перед закатом</li>
+<li>Избегай полуденного солнца (12:00-15:00) — жёсткие тени</li>
+<li>В пасмурную погоду — отличные портреты (мягкий свет)</li>
+<li>В помещении — у окна, без вспышки</li>
+</ul>
+</div>
+<div class="checklist-card reveal" data-delay="2">
+<h4>📐 Композиция</h4>
+<ul>
+<li>Правило третей — главный объект не в центре</li>
+<li>Линии (дорожки, перила) ведут взгляд к объекту</li>
+<li>Ракурс снизу = величие, сверху = миниатюрность</li>
+<li>Передний план (трава, цветы) добавляет глубину</li>
+</ul>
+</div>
+<div class="checklist-card reveal" data-delay="3">
+<h4>📱 На телефон</h4>
+<ul>
+<li>Протирай объектив перед съёмкой (футболкой — плохая идея)</li>
+<li>Не используй цифровой зум — приближай ногами</li>
+<li>HDR включи для контрастных сцен (закат)</li>
+<li>Снимай в RAW (если есть) — больше деталей</li>
+</ul>
+</div>
+<div class="checklist-card reveal" data-delay="4">
+<h4>🎬 Reels / Stories</h4>
+<ul>
+<li>Снимай 5-10 сек ролики в каждом месте</li>
+<li>Вертикально 9:16 для Stories, Reels</li>
+<li>Бери motion — волны, ветер в пальмах, люди</li>
+<li>CapCut / InShot для монтажа на телефоне</li>
+</ul>
+</div>
+</div>
+
+<div class="panel-nav">
+<button aria-label="Предыдущая вкладка" class="panel-nav-btn prev" data-prev="map-hotel">Назад</button>
 <button aria-label="Конец" class="panel-nav-btn next" disabled="">Конец</button>
 </div>
 </div>
@@ -3608,8 +4091,10 @@
 <button class="more-item" data-tab="excursions"><span class="icon">🗺</span><span>Экскурсии</span></button>
 <button class="more-item" data-tab="market"><span class="icon">🛒</span><span>Рынок</span></button>
 <button class="more-item" data-tab="lifehacks"><span class="icon">💡</span><span>Лайфхаки</span></button>
-<button class="more-item" data-tab="kids"><span class="icon">👶</span><span>Детям</span></button>
-<button class="more-item" data-tab="map"><span class="icon">📍</span><span>Карта</span></button>
+<button class="more-item" data-tab="kids"><span class="icon">🛹</span><span>Подросткам 10-13</span></button>
+<button class="more-item" data-tab="map-hotel"><span class="icon">🗺️</span><span>Карта отеля</span></button>
+<button class="more-item" data-tab="photospots"><span class="icon">📷</span><span>Фото-точки</span></button>
+<button class="more-item" data-tab="map"><span class="icon">📍</span><span>Карта Белека</span></button>
 <button class="more-item" data-tab="video"><span class="icon">🎥</span><span>Видео</span></button>
 </div>
 </div>
@@ -4321,6 +4806,9 @@ document.querySelectorAll('.sub-tab').forEach(tab => {
     { e: '📍', t: 'Карта и расположение', tab: 'map', d: 'Контакты, аэропорт, пляж' },
     { e: '🎥', t: 'Видеообзоры отеля', tab: 'video', d: 'YouTube, 2 видео' },
     { e: '📰', t: 'Новости отеля', tab: 'news', d: 'Акции, награды, анимация 2026' },
+    { e: '🗺️', t: 'Карта территории отеля', tab: 'map-hotel', d: 'Схема с маркерами: бассейны, ресторан, SPA' },
+    { e: '📷', t: 'Фото-точки — где сделать лучшие кадры', tab: 'photospots', d: 'Топ-5 мест: Maldiv Pool, аквапарк, закат, swim-up, хаммам' },
+    { e: '🛹', t: 'Подросткам 10-13 лет', tab: 'kids', d: 'Экстрим-горки, спорт, вечеринки, самостоятельность' },
   ];
 
   function openSearch() {
