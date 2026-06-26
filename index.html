@@ -58,15 +58,21 @@
   }
   .tabs-nav-inner {
     max-width: 1320px; margin: 0 auto; padding: 0 20px;
-    display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+    display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: nowrap;
   }
-  .brand { color: #d4af37; font-weight: 900; font-size: 1em; letter-spacing: 2px; }
-  .tab-list { display: flex; gap: 3px; flex-wrap: wrap; }
+  .brand { color: #d4af37; font-weight: 900; font-size: 1em; letter-spacing: 2px; flex-shrink: 0; }
+  .tab-list {
+    display: flex; gap: 3px; flex-wrap: nowrap;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; -ms-overflow-style: none;
+    flex: 1; min-width: 0;
+  }
+  .tab-list::-webkit-scrollbar { display: none; }
   .tab-btn {
     background: transparent; border: none; color: rgba(232,232,239,0.75);
     padding: 8px 14px; border-radius: 10px; font-size: 0.85em;
     font-weight: 600; cursor: pointer; font-family: inherit;
-    transition: 0.3s;
+    transition: 0.3s; flex-shrink: 0; white-space: nowrap;
   }
   .tab-btn:hover { color: #d4af37; background: rgba(212, 175, 55, 0.1); }
   .tab-btn.active {
@@ -565,10 +571,10 @@
   .footer-links a:hover { background: rgba(212,175,55,0.15); }
 
   /* ========== RESPONSIVE ========== */
-  @media (max-width: 768px) {
-    .tabs-nav-inner { flex-direction: column; gap: 8px; padding: 0 12px; }
-    .tab-list { justify-content: center; }
-    .tab-btn { padding: 6px 10px; font-size: 0.72em; }
+  @media (max-width: 1024px) {
+    .tabs-nav-inner { gap: 10px; padding: 0 14px; }
+    .tab-btn { padding: 6px 10px; font-size: 0.78em; }
+    .brand { font-size: 0.9em; }
     .container { padding: 0 14px; }
     .panel-section { padding: 35px 0 25px; }
     .expert-card { flex-direction: column; text-align: center; padding: 20px 14px; }
@@ -2545,12 +2551,12 @@
 <div class="checklist-card reveal" data-delay="1">
 <h4>📋 Документы</h4>
 <ul>
-<li>Загранпаспорт (мин. 6 мес. после поездки)</li>
+<li>Загранпаспорт (мин. 6 мес. после поездки, для граждан РК)</li>
 <li>Распечатка страховки + полис</li>
 <li>Авиабилеты (распечатка + телефон)</li>
 <li>Ваучер отеля (распечатка)</li>
 <li>Банковские карты (2 разные банки)</li>
-<li>Наличные € 200-300 на старте</li>
+<li>Наличные € 200-300 (≈ 100 000-150 000 ₸) на старте</li>
 <li>Копии документов в облако</li>
 <li>Драйверские права (МВУ)</li>
 </ul>
@@ -2660,28 +2666,28 @@
 
 <div class="weather-intro reveal" style="margin-top: 28px;">
 <h3>💰 Цены в Турции 2026 (лето)</h3>
-<p>Курс: €1 ≈ 35 ₺ ≈ 100 ₽. Цены в лирах, в скобках — эквивалент в рублях.</p>
+<p>Курс: €1 ≈ 35 ₺ ≈ 540 ₸. Цены в лирах, в скобках — эквивалент в тенге.</p>
 </div>
 
 <div class="price-grid">
-<div class="price-item reveal"><span class="name">💧 Вода 0.5 л (магазин)</span><span class="price">10 ₺ (~10 ₽)</span></div>
-<div class="price-item reveal"><span class="name">💧 Вода 1.5 л (магазин)</span><span class="price">20 ₺ (~20 ₽)</span></div>
-<div class="price-item reveal"><span class="name">☕ Кофе в кафе</span><span class="price">60-80 ₺ (~80 ₽)</span></div>
-<div class="price-item reveal"><span class="name">🍕 Пицца (кафе)</span><span class="price">200-300 ₺ (~300 ₽)</span></div>
-<div class="price-item reveal"><span class="name">🍽 Ужин в кафе на 2 чел.</span><span class="price">800-1500 ₺ (~1500 ₽)</span></div>
-<div class="price-item reveal"><span class="name">🚕 Такси Belek → Antalya</span><span class="price">800-1200 ₺ (~1200 ₽)</span></div>
-<div class="price-item reveal"><span class="name">🚕 Такси Belek → Airport</span><span class="price">1000-1500 ₺ (~1500 ₽)</span></div>
-<div class="price-item reveal"><span class="name">🚌 Долмуш Belek → Kadriye</span><span class="price">25 ₺ (~25 ₽)</span></div>
-<div class="price-item reveal"><span class="name">🚬 Сигареты Marlboro</span><span class="price">120 ₺ (~120 ₽)</span></div>
-<div class="price-item reveal"><span class="name">🍺 Пиво Efes 0.5 (магазин)</span><span class="price">55-70 ₺ (~70 ₽)</span></div>
-<div class="price-item reveal"><span class="name">🍷 Вино (бутылка, магазин)</span><span class="price">300-500 ₺ (~500 ₽)</span></div>
-<div class="price-item reveal"><span class="name">🍦 Мороженое</span><span class="price">50-80 ₺ (~80 ₽)</span></div>
-<div class="price-item reveal"><span class="name">🥥 Кокос на пляже</span><span class="price">100-150 ₺ (~150 ₽)</span></div>
-<div class="price-item reveal"><span class="name">👕 Футболка сувенирная</span><span class="price">150-300 ₺ (~300 ₽)</span></div>
-<div class="price-item reveal"><span class="name">🧿 Глаз Фатимы (малый)</span><span class="price">50-100 ₺ (~100 ₽)</span></div>
-<div class="price-item reveal"><span class="name">🍯 Турецкий мёд (500 г)</span><span class="price">400-800 ₺ (~800 ₽)</span></div>
-<div class="price-item reveal"><span class="name">🪔 Баклажанная икра (банка)</span><span class="price">80-150 ₺ (~150 ₽)</span></div>
-<div class="price-item reveal"><span class="name">🌹 Турецкие сладости (кг)</span><span class="price">400-700 ₺ (~700 ₽)</span></div>
+<div class="price-item reveal"><span class="name">💧 Вода 0.5 л (магазин)</span><span class="price">10 ₺ (~50 ₸)</span></div>
+<div class="price-item reveal"><span class="name">💧 Вода 1.5 л (магазин)</span><span class="price">20 ₺ (~110 ₸)</span></div>
+<div class="price-item reveal"><span class="name">☕ Кофе в кафе</span><span class="price">60-80 ₺ (~430 ₸)</span></div>
+<div class="price-item reveal"><span class="name">🍕 Пицца (кафе)</span><span class="price">200-300 ₺ (~1 620 ₸)</span></div>
+<div class="price-item reveal"><span class="name">🍽 Ужин в кафе на 2 чел.</span><span class="price">800-1500 ₺ (~8 100 ₸)</span></div>
+<div class="price-item reveal"><span class="name">🚕 Такси Belek → Antalya</span><span class="price">800-1200 ₺ (~6 480 ₸)</span></div>
+<div class="price-item reveal"><span class="name">🚕 Такси Belek → Airport</span><span class="price">1000-1500 ₺ (~8 100 ₸)</span></div>
+<div class="price-item reveal"><span class="name">🚌 Долмуш Belek → Kadriye</span><span class="price">25 ₺ (~140 ₸)</span></div>
+<div class="price-item reveal"><span class="name">🚬 Сигареты Marlboro</span><span class="price">120 ₺ (~650 ₸)</span></div>
+<div class="price-item reveal"><span class="name">🍺 Пиво Efes 0.5 (магазин)</span><span class="price">55-70 ₺ (~380 ₸)</span></div>
+<div class="price-item reveal"><span class="name">🍷 Вино (бутылка, магазин)</span><span class="price">300-500 ₺ (~2 700 ₸)</span></div>
+<div class="price-item reveal"><span class="name">🍦 Мороженое</span><span class="price">50-80 ₺ (~430 ₸)</span></div>
+<div class="price-item reveal"><span class="name">🥥 Кокос на пляже</span><span class="price">100-150 ₺ (~810 ₸)</span></div>
+<div class="price-item reveal"><span class="name">👕 Футболка сувенирная</span><span class="price">150-300 ₺ (~1 620 ₸)</span></div>
+<div class="price-item reveal"><span class="name">🧿 Глаз Фатимы (малый)</span><span class="price">50-100 ₺ (~540 ₸)</span></div>
+<div class="price-item reveal"><span class="name">🍯 Турецкий мёд (500 г)</span><span class="price">400-800 ₺ (~4 320 ₸)</span></div>
+<div class="price-item reveal"><span class="name">🪔 Баклажанная икра (банка)</span><span class="price">80-150 ₺ (~810 ₸)</span></div>
+<div class="price-item reveal"><span class="name">🌹 Турецкие сладости (кг)</span><span class="price">400-700 ₺ (~3 780 ₸)</span></div>
 </div>
 
 <div class="weather-intro reveal" style="margin-top: 28px;">
@@ -2775,12 +2781,12 @@
 <div class="checklist-card reveal" data-delay="1">
 <h4>💳 Карты</h4>
 <ul>
-<li>Visa / Mastercard — везде работают</li>
-<li>❌ Visa Electron / Maestro — нет</li>
-<li>❌ UnionPay (китайская) — почти нет</li>
+<li>Visa / Mastercard — везде работают (кроме санкционных банков РФ)</li>
 <li>❌ МИР — НЕ работает в Турции</li>
-<li>✅ Карты Tinkoff / Альфа без комиссии</li>
-<li>✅ Union Pay (Газпромбанк) — работает!</li>
+<li>❌ Российская UnionPay (Газпромбанк) — с 2024 НЕ работает</li>
+<li>✅ Карты Казахстана: Halyk Bank, Kaspi, Jusan, Forte — работают!</li>
+<li>✅ Kaspi QR — не работает, только через Visa/MC</li>
+<li>✅ Union Pay казахстанских банков (Halyk) — работает</li>
 <li>Берите 2 разные карты на случай блокировки</li>
 </ul>
 </div>
@@ -2822,7 +2828,55 @@
 <p class="subtitle reveal">Как добраться, что посмотреть рядом, топ-10 экскурсий из Белека, расписание дня в отеле</p>
 
 <div class="weather-intro reveal">
-<h3>✈️ Как добраться от аэропорта Antalya</h3>
+<h3>✈️ Из Казахстана в Анталью — авиарейсы 2026</h3>
+<p>Прямые рейсы из Алматы и Астаны — летом 2026. Время в пути ~5-6 часов.</p>
+</div>
+
+<div class="excursion-grid reveal-scale">
+<div class="excursion-card reveal" data-delay="1">
+<span class="exc-icon">✈️</span>
+<h4>Алматы (ALA) → Анталья (AYT)</h4>
+<div class="exc-meta">
+<span>⏱ 5 ч 30 мин</span>
+<span>🔄 пн, ср, пт, вс</span>
+</div>
+<div class="exc-price">от 180 000 ₸</div>
+<p>Прямые рейсы: Air Astana, SCAT, Turkish Airlines. С мая по октябрь — ежедневно. Зимой — только через Стамбул.</p>
+</div>
+<div class="excursion-card reveal" data-delay="2">
+<span class="exc-icon">✈️</span>
+<h4>Астана (NQZ) → Анталья (AYT)</h4>
+<div class="exc-meta">
+<span>⏱ 6 ч 00 мин</span>
+<span>🔄 вт, чт, сб</span>
+</div>
+<div class="exc-price">от 200 000 ₸</div>
+<p>Прямые рейсы: Air Astana, SCAT. С июня по сентябрь. Вне сезона — через Стамбул (~9 ч с пересадкой).</p>
+</div>
+<div class="excursion-card reveal" data-delay="3">
+<span class="exc-icon">✈️</span>
+<h4>Шымкент (CIT) → Анталья (AYT)</h4>
+<div class="exc-meta">
+<span>⏱ 5 ч 45 мин</span>
+<span>🔄 пн, пт</span>
+</div>
+<div class="exc-price">от 170 000 ₸</div>
+<p>Прямые рейсы: SCAT (сезонные, июнь-сентябрь). Вне сезона — через Стамбул или Алматы.</p>
+</div>
+<div class="excursion-card reveal" data-delay="4">
+<span class="exc-icon">🛂</span>
+<h4>Через Стамбул (IST/SAW)</h4>
+<div class="exc-meta">
+<span>⏱ 8-11 ч с пересадкой</span>
+<span>🔄 ежедневно</span>
+</div>
+<div class="exc-price">от 220 000 ₸</div>
+<p>Turkish Airlines, Air Astana. Пересадка 2-5 часов в Стамбуле, потом 1.5 ч до Антальи. Дороже, но работает круглый год.</p>
+</div>
+</div>
+
+<div class="weather-intro reveal" style="margin-top: 28px;">
+<h3>🚖 От аэропорта Antalya до отеля</h3>
 <p>Аэропорт Antalya (AYT) — 29 км от отеля, ~44 минуты на машине. 4 варианта на выбор.</p>
 </div>
 
@@ -2834,7 +2888,7 @@
 <span>⏱ 44 мин</span>
 <span>🔄 24/7</span>
 </div>
-<div class="exc-price">1000-1500 ₺ (~1200 ₽)</div>
+<div class="exc-price">1000-1500 ₺ (~6 480 ₸)</div>
 <p>Удобнее всего, особенно с детьми. Официальное такси жёлтого цвета, счётчик. Не торгуйтесь — цена по тарифу. Либо закажите трансфер заранее (Hoppa, Suntransfers).</p>
 </div>
 <div class="excursion-card reveal" data-delay="2">
@@ -2854,7 +2908,7 @@
 <span>⏱ 1.5-2 часа</span>
 <span>🔄 06:00-23:00</span>
 </div>
-<div class="exc-price">25-30 ₺ (~30 ₽)</div>
+<div class="exc-price">25-30 ₺ (~160 ₸)</div>
 <p>Самый дешёвый вариант, но неудобен с багажом. Маршрут 800 идёт от аэропорта до центра Antalya, потом пересадка на долмуш до Belek. Только для лёгких путешественников.</p>
 </div>
 <div class="excursion-card reveal" data-delay="4">
@@ -2882,7 +2936,7 @@
 <span>⏱ каждые 15 мин</span>
 <span>🔄 06:00-23:00</span>
 </div>
-<div class="exc-price">25 ₺ (~25 ₽)</div>
+<div class="exc-price">25 ₺ (~140 ₸)</div>
 <p>Синие минибасы. Останавливаются везде — просто махните рукой. Оплата при выходе водителю. Маршрут Kadriye ↔ Belek ↔ Serik. Сумки влезут, но в час пик тесно.</p>
 </div>
 <div class="excursion-card reveal" data-delay="2">
@@ -3131,7 +3185,7 @@
 <div class="lifehack-card reveal" data-delay="9">
 <span class="lifehack-num">9</span>
 <h4>Сим-карта — Turkcell у аэропорта</h4>
-<p>20 € за 20 ГБ на 30 дней. Vodafone и Türk Telekom — дешевле, но хуже покрытие. eSIM — если у тебя iPhone 14+, используй Airalo (без физической карты). Wi-Fi в отеле — слабый.</p>
+<p>20 € за 20 ГБ на 30 дней. Vodafone и Türk Telekom — дешевле, но хуже покрытие. eSIM — если у тебя iPhone 14+, используй Airalo (без физической карты). Карты казахстанских банков (Halyk, Kaspi) работают для оплаты.</p>
 </div>
 <div class="lifehack-card reveal" data-delay="10">
 <span class="lifehack-num">10</span>
@@ -3200,11 +3254,11 @@
 </div>
 <div class="contact-card reveal" data-delay="3">
 <div class="contact-icon">🇷🇺</div>
-<div class="contact-info"><strong>Консульство РФ в Анталье</strong><span><a href="tel:+902422484282">+90 242 248 42 82</a></span></div>
+<div class="contact-info"><strong>Консульство РК в Стамбуле</strong><span><a href="tel:+902122811470">+90 212 281 14 70</a></span></div>
 </div>
 <div class="contact-card reveal" data-delay="3">
 <div class="contact-icon">📧</div>
-<div class="contact-info"><strong>Email консульства</strong><span><a href="mailto:antalya@mid.ru">antalya@mid.ru</a></span></div>
+<div class="contact-info"><strong>Email консульства РК</strong><span><a href="mailto:istanbul@mfa.kz">istanbul@mfa.kz</a></span></div>
 </div>
 </div>
 
@@ -3232,7 +3286,7 @@
 <span>⏱ до прилёта</span>
 </div>
 <div class="exc-price">$15-25 за 5-10 ГБ</div>
-<p>Без физической симки. Скачай приложение Airalo → выбери Turkey → оплати картой → активируй по прилёту. Дешевле, чем турецкие операторы. Минус — номер остаётся российский.</p>
+<p>Без физической симки. Скачай приложение Airalo → выбери Turkey → оплати картой казахстанского банка → активируй по прилёту. Дешевле, чем турецкие операторы. Минус — номер остаётся казахстанский.</p>
 </div>
 <div class="excursion-card reveal" data-delay="3">
 <span class="exc-icon">💬</span>
@@ -3294,9 +3348,9 @@
 
 <div class="accordion pros reveal"><div aria-expanded="false" class="accordion-header" role="button" tabindex="0"><span>Можно ли пить воду из-под крана?</span><span class="accordion-icon">+</span></div><div class="accordion-content"><div class="accordion-body"><strong>Нет.</strong> Пейте только бутылированную. В номере — бесплатные бутылки (пополняются ежедневно). В ресторанах и барах — тоже бутылированная. Чистить зубы можно из-под крана, но лучше бутылированной.</div></div></div>
 
-<div class="accordion pros reveal"><div aria-expanded="false" class="accordion-header" role="button" tabindex="0"><span>Нужна ли виза в Турцию?</span><span class="accordion-icon">+</span></div><div class="accordion-content"><div class="accordion-body">Для россиян — <strong>без визы до 60 дней</strong> в течение 180-дневного периода. Загранпаспорт должен действовать 4+ месяца с даты въезда. Штамп ставят в аэропорту бесплатно.</div></div></div>
+<div class="accordion pros reveal"><div aria-expanded="false" class="accordion-header" role="button" tabindex="0"><span>Нужна ли виза в Турцию?</span><span class="accordion-icon">+</span></div><div class="accordion-content"><div class="accordion-body">Для граждан Казахстана — <strong>без визы до 30 дней</strong> туристической поездки. Загранпаспорт должен действовать 6+ месяцев с даты въезда. Штамп ставят в аэропорту бесплатно.</div></div></div>
 
-<div class="accordion pros reveal"><div aria-expanded="false" class="accordion-header" role="button" tabindex="0"><span>Какая валюта лучше?</span><span class="accordion-icon">+</span></div><div class="accordion-content"><div class="accordion-body"><strong>Евро</strong> — универсально, меняют везде. Доллар — тоже ок. Лучший курс обмена — не в аэропорту, а в обменниках (Döviz) в Kadriye/Belek. Карты Visa/Mastercard российских банков <strong>не работают</strong>, берите UnionPay (Газпромбанк) или наличные.</div></div></div>
+<div class="accordion pros reveal"><div aria-expanded="false" class="accordion-header" role="button" tabindex="0"><span>Какая валюта лучше?</span><span class="accordion-icon">+</span></div><div class="accordion-content"><div class="accordion-body"><strong>Евро</strong> — универсально, меняют везде. Доллар — тоже ок. Тенге можно обменять в Antalya, но курс невыгодный — лучше менять в Алматы/Астане на € или $ перед вылетом. Карты казахстанских банков (Halyk, Kaspi, Jusan) <strong>работают</strong>. Российские Visa/MC — не работают.</div></div></div>
 
 <div class="accordion pros reveal"><div aria-expanded="false" class="accordion-header" role="button" tabindex="0"><span>Сколько давать чаевых?</span><span class="accordion-icon">+</span></div><div class="accordion-content"><div class="accordion-body">В ресторанах — <strong>10% от счёта</strong> или округление вверх. В отеле: горничной 20-50 ₺/день, официанту 30-50 ₺ за ужин, бармену 100 ₺ один раз в начале отдыха (станете «своим»). Носильщику 20-50 ₺ за чемодан.</div></div></div>
 
@@ -3317,7 +3371,7 @@
 <div class="currency-row">
 <div class="currency-input-wrap">
 <label>Сумма</label>
-<input id="curAmount" min="0" step="0.01" type="number" value="100"/>
+<input id="curAmount" min="0" step="0.01" type="number" value="10000"/>
 </div>
 <div class="currency-arrow">→</div>
 <div class="currency-input-wrap">
@@ -3325,12 +3379,12 @@
 <select id="curCurrency">
 <option value="EUR">€ Евро</option>
 <option value="USD">$ Доллар США</option>
-<option selected="selected" value="TRY">₺ Турецкая лира</option>
-<option value="RUB">₽ Российский рубль</option>
+<option selected="selected" value="KZT">₸ Казахстанский тенге</option>
+<option value="KZT">₸ Казахстанский тенге</option>
 </select>
 </div>
 </div>
-<div class="currency-rate" id="curResult">100 ₺ = <strong>≈ 280 ₽</strong> &nbsp;•&nbsp; ≈ €2.86 &nbsp;•&nbsp; ≈ $3.12</div>
+<div class="currency-rate" id="curResult">10000 ₸ = <strong>≈ €18.52</strong> &nbsp;•&nbsp; ≈ $20.18 &nbsp;•&nbsp; ≈ ₺648</div>
 </div>
 
 <div class="panel-nav">
@@ -4678,8 +4732,8 @@ document.querySelectorAll('.sub-tab').forEach(tab => {
   const curCurrency = document.getElementById('curCurrency');
   const curResult = document.getElementById('curResult');
   // Курсы относительно 1 EUR (лето 2026, условные)
-  const rates = { EUR: 1, USD: 1.09, TRY: 35, RUB: 100 };
-  const symbols = { EUR: '€', USD: '$', TRY: '₺', RUB: '₽' };
+  const rates = { EUR: 1, USD: 1.09, TRY: 35, KZT: 540 };  // 1 EUR ≈ 540 ₸
+  const symbols = { EUR: '€', USD: '$', TRY: '₺', KZT: '₸' };
 
   function convertCurrency() {
     if (!curAmount || !curCurrency || !curResult) return;
