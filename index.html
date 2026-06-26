@@ -1500,34 +1500,7 @@
     .more-item { padding: 10px 12px; font-size: 0.82em; }
   }
 
-  /* ---------- 41. Подсказка «обновление доступно» ---------- */
-  .update-banner {
-    position: fixed; bottom: -100px; left: 50%;
-    transform: translateX(-50%); z-index: 9995;
-    background: linear-gradient(135deg, #14142a, #1a1a35);
-    border: 1px solid rgba(212, 175, 55, 0.5);
-    border-radius: 100px; padding: 12px 22px;
-    display: flex; align-items: center; gap: 14px;
-    box-shadow: 0 12px 36px rgba(0,0,0,0.5), 0 0 30px rgba(212,175,55,0.3);
-    transition: bottom 0.5s cubic-bezier(.2,.7,.2,1);
-    max-width: 90vw;
-  }
-  .update-banner.visible { bottom: 28px; }
-  @supports (padding: max(0px)) {
-    .update-banner.visible { bottom: max(28px, env(safe-area-inset-bottom)); }
-  }
-  .update-banner .text {
-    color: #f5f5fa; font-size: 0.88em; font-weight: 600;
-  }
-  .update-banner .text strong { color: #d4af37; }
-  .update-banner .btn {
-    background: linear-gradient(135deg, #d4af37, #f5b700);
-    color: #0a0a14; border: none; padding: 8px 16px;
-    border-radius: 100px; font-weight: 800; font-size: 0.85em;
-    cursor: pointer; font-family: inherit; white-space: nowrap;
-    transition: background 0.3s;
-  }
-  .update-banner .btn:hover, .update-banner .btn:active { background: linear-gradient(135deg, #f5b700, #fff5b7); }
+  /* (баннер «обновление доступно» удалён — SW v3 обновляет HTML автоматически через network-first) */
 </style>
 </head>
 <body>
@@ -3643,11 +3616,6 @@
 </div>
 </div>
 
-<!-- ✨ Баннер «обновление доступно» -->
-<div class="update-banner" id="updateBanner">
-<span class="text">🔄 Доступна <strong>новая версия</strong> сайта</span>
-<button class="btn" id="updateBtn">Обновить</button>
-</div>
 <!-- ✅ FIX #6: LIGHTBOX с aria-label -->
 <div aria-label="Просмотр фото" aria-modal="true" class="lightbox" id="lightbox" role="dialog">
 <div aria-label="Закрыть просмотр" class="lightbox-close" onclick="closeLightbox()" role="button" tabindex="0">×</div>
@@ -4482,35 +4450,12 @@ document.querySelectorAll('.sub-tab').forEach(tab => {
     if (e.key === 'Escape' && moreMenu?.classList.contains('active')) closeMoreMenu();
   });
 
-  // ---------- 17. Service Worker: уведомление об обновлении ----------
-  const updateBanner = document.getElementById('updateBanner');
-  const updateBtn = document.getElementById('updateBtn');
-
+  // ---------- 17. Регистрация Service Worker ----------
+  // SW v3 сам обновляет HTML через network-first — баннер «обновление» больше не нужен.
+  // При новой версии SW автоматически инвалидирует старый кэш и активируется.
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      // Новый SW активировался — можно перезагрузить
-    });
-    // Проверяем, есть ли обновление
-    navigator.serviceWorker.register('sw.js').then(reg => {
-      reg.addEventListener('updatefound', () => {
-        const newWorker = reg.installing;
-        if (newWorker) {
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // Обновление доступно!
-              if (updateBanner) updateBanner.classList.add('visible');
-            }
-          });
-        }
-      });
-      // Проверяем обновления каждые 30 минут
-      setInterval(() => reg.update().catch(() => {}), 30 * 60 * 1000);
-    });
-  }
-  if (updateBtn) {
-    updateBtn.addEventListener('click', () => {
-      if (updateBanner) updateBanner.classList.remove('visible');
-      window.location.reload();
+    navigator.serviceWorker.register('sw.js').catch(err => {
+      console.warn('[SW] registration failed:', err);
     });
   }
 
