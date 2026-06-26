@@ -616,22 +616,30 @@
 
   /* ---------- 2. Back-to-top button ---------- */
   .back-to-top {
-    position: fixed; bottom: 28px; right: 28px; z-index: 150;
-    width: 52px; height: 52px; border-radius: 50%;
+    position: fixed; bottom: 20px; right: 20px; z-index: 9998;
+    width: 48px; height: 48px; border-radius: 50%;
     background: linear-gradient(135deg, #d4af37, #f5b700);
-    color: #0a0a14; font-size: 1.5em; font-weight: 900;
+    color: #0a0a14; font-size: 1.4em; font-weight: 900;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; border: none; font-family: inherit;
-    box-shadow: 0 8px 28px rgba(212,175,55,0.5), 0 0 0 0 rgba(212,175,55,0.4);
-    opacity: 0; transform: translateY(20px) scale(0.8); pointer-events: none;
-    transition: opacity 0.4s, transform 0.4s, box-shadow 0.3s;
+    box-shadow: 0 8px 28px rgba(212,175,55,0.5);
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+    will-change: opacity;
+    /* iOS Safari fix: НЕ использовать transform в начальном состоянии — ломает position:fixed */
   }
-  .back-to-top.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+  .back-to-top.visible { opacity: 1; visibility: visible; pointer-events: auto; }
   .back-to-top:hover {
     box-shadow: 0 12px 36px rgba(212,175,55,0.7), 0 0 0 8px rgba(212,175,55,0.15);
-    transform: translateY(-3px) scale(1.05);
   }
-  .back-to-top:active { transform: translateY(0) scale(0.95); }
+  .back-to-top:active { opacity: 0.85; }
+  /* На iOS используем safe-area-inset чтобы кнопка не залезала под home-indicator */
+  @supports (padding: max(0px)) {
+    .back-to-top {
+      bottom: max(20px, env(safe-area-inset-bottom));
+      right: max(20px, env(safe-area-inset-right));
+    }
+  }
 
   /* ---------- 3. Scroll reveal animations ---------- */
   .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(.2,.7,.2,1), transform 0.8s cubic-bezier(.2,.7,.2,1); }
@@ -853,19 +861,23 @@
   /* ---------- 24. Toast-уведомления ---------- */
   .toast {
     position: fixed; bottom: 32px; left: 50%;
-    transform: translateX(-50%) translateY(80px);
+    transform: translateX(-50%);
     background: linear-gradient(135deg, #14142a, #1a1a35);
     color: #f5f5fa; padding: 14px 22px;
     border-radius: 100px; font-weight: 700; font-size: 0.92em;
     border: 1px solid rgba(212,175,55,0.4);
     box-shadow: 0 12px 36px rgba(0,0,0,0.5), 0 0 24px rgba(212,175,55,0.3);
-    backdrop-filter: blur(20px); z-index: 500;
-    opacity: 0; transition: opacity 0.3s, transform 0.4s cubic-bezier(.2,.7,.2,1);
-    pointer-events: none; white-space: nowrap;
-    display: flex; align-items: center; gap: 8px;
+    backdrop-filter: blur(20px); z-index: 9997;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    white-space: nowrap; display: flex; align-items: center; gap: 8px;
+    /* iOS fix: убран translateY(80px) из transform — ломает fixed */
   }
   .toast.visible {
-    opacity: 1; transform: translateX(-50%) translateY(0);
+    opacity: 1; visibility: visible;
+  }
+  @supports (padding: max(0px)) {
+    .toast { bottom: max(32px, env(safe-area-inset-bottom)); }
   }
   .toast-icon {
     width: 22px; height: 22px; border-radius: 50%;
@@ -1259,18 +1271,24 @@
 
   /* ---------- 36. Search modal ---------- */
   .search-trigger {
-    position: fixed; top: 14px; right: 14px; z-index: 110;
+    position: fixed; top: 14px; right: 14px; z-index: 9996;
     background: rgba(212,175,55,0.15);
     border: 1px solid rgba(212,175,55,0.4);
     color: #d4af37; padding: 8px 14px; border-radius: 100px;
     font-size: 0.85em; font-weight: 600; font-family: inherit;
-    cursor: pointer; transition: 0.3s;
+    cursor: pointer; transition: background 0.3s ease;
     display: inline-flex; align-items: center; gap: 6px;
     backdrop-filter: blur(10px);
+    /* iOS fix: убран transform на hover — ломает fixed на iPhone */
   }
-  .search-trigger:hover {
-    background: rgba(212,175,55,0.3);
-    transform: scale(1.05);
+  .search-trigger:hover, .search-trigger:active {
+    background: rgba(212,175,55,0.4);
+  }
+  @supports (padding: max(0px)) {
+    .search-trigger {
+      top: max(14px, env(safe-area-inset-top));
+      right: max(14px, env(safe-area-inset-right));
+    }
   }
   .search-trigger kbd {
     background: rgba(0,0,0,0.4); padding: 1px 6px; border-radius: 4px;
@@ -1485,7 +1503,7 @@
   /* ---------- 41. Подсказка «обновление доступно» ---------- */
   .update-banner {
     position: fixed; bottom: -100px; left: 50%;
-    transform: translateX(-50%); z-index: 800;
+    transform: translateX(-50%); z-index: 9995;
     background: linear-gradient(135deg, #14142a, #1a1a35);
     border: 1px solid rgba(212, 175, 55, 0.5);
     border-radius: 100px; padding: 12px 22px;
@@ -1495,6 +1513,9 @@
     max-width: 90vw;
   }
   .update-banner.visible { bottom: 28px; }
+  @supports (padding: max(0px)) {
+    .update-banner.visible { bottom: max(28px, env(safe-area-inset-bottom)); }
+  }
   .update-banner .text {
     color: #f5f5fa; font-size: 0.88em; font-weight: 600;
   }
@@ -1504,9 +1525,9 @@
     color: #0a0a14; border: none; padding: 8px 16px;
     border-radius: 100px; font-weight: 800; font-size: 0.85em;
     cursor: pointer; font-family: inherit; white-space: nowrap;
-    transition: 0.3s;
+    transition: background 0.3s;
   }
-  .update-banner .btn:hover { transform: scale(1.05); }
+  .update-banner .btn:hover, .update-banner .btn:active { background: linear-gradient(135deg, #f5b700, #fff5b7); }
 </style>
 </head>
 <body>
