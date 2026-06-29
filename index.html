@@ -57,7 +57,7 @@
     padding: 12px 0;
   }
   .tabs-nav-inner {
-    max-width: 1320px; margin: 0 auto; padding: 0 20px;
+    max-width: 1320px; margin: 0 auto; padding: 0 20px 0 64px;
     display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: nowrap;
   }
   .brand { color: #d4af37; font-weight: 900; font-size: 1em; letter-spacing: 2px; flex-shrink: 0; }
@@ -1277,24 +1277,32 @@
 
   /* ---------- 36. Search modal ---------- */
   .search-trigger {
-    position: fixed; top: 14px; right: 14px; z-index: 9996;
+    position: fixed; top: 14px; left: 14px; z-index: 9996;
     background: rgba(212,175,55,0.15);
     border: 1px solid rgba(212,175,55,0.4);
-    color: #d4af37; padding: 8px 14px; border-radius: 100px;
-    font-size: 0.85em; font-weight: 600; font-family: inherit;
+    color: #d4af37; padding: 7px 12px; border-radius: 100px;
+    font-size: 0.82em; font-weight: 600; font-family: inherit;
     cursor: pointer; transition: background 0.3s ease;
     display: inline-flex; align-items: center; gap: 6px;
     backdrop-filter: blur(10px);
-    /* iOS fix: убран transform на hover — ломает fixed на iPhone */
+    max-width: 44px; overflow: hidden; white-space: nowrap;
   }
+  .search-trigger .kbd-text { display: none; }
   .search-trigger:hover, .search-trigger:active {
     background: rgba(212,175,55,0.4);
+    max-width: 200px;
   }
+  .search-trigger:hover .kbd-text { display: inline; }
   @supports (padding: max(0px)) {
     .search-trigger {
       top: max(14px, env(safe-area-inset-top));
-      right: max(14px, env(safe-area-inset-right));
+      left: max(14px, env(safe-area-inset-left));
     }
+  }
+  /* На десктопе показываем ⌘K полностью */
+  @media (min-width: 1025px) {
+    .search-trigger { max-width: 200px; }
+    .search-trigger .kbd-text { display: inline; }
   }
   .search-trigger kbd {
     background: rgba(0,0,0,0.4); padding: 1px 6px; border-radius: 4px;
@@ -1627,6 +1635,111 @@
     font-size: 0.82em; color: rgba(232,232,239,0.75);
   }
   .photospot-tip strong { color: #d4af37; }
+
+  /* ---------- 44. Nearby places (Поблизости) ---------- */
+  .nearby-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px; margin-top: 18px;
+  }
+  .nearby-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 14px; padding: 16px;
+    transition: 0.3s; position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .nearby-card:hover {
+    border-color: rgba(212,175,55,0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.3), 0 0 20px rgba(212,175,55,0.15);
+  }
+  .nearby-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--cat-color, #d4af37);
+  }
+  .nearby-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .nearby-title {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nearby-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: var(--cat-bg, rgba(212,175,55,0.15));
+    border: 1px solid var(--cat-color, rgba(212,175,55,0.4));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3em; flex-shrink: 0;
+  }
+  .nearby-card h4 {
+    color: #f5f5fa; font-size: 0.98em; margin: 0; line-height: 1.2;
+  }
+  .nearby-card .category {
+    color: var(--cat-color, #d4af37); font-size: 0.72em;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    margin-top: 3px; display: block;
+  }
+  .nearby-distance {
+    background: rgba(212,175,55,0.15);
+    border: 1px solid rgba(212,175,55,0.4);
+    color: #d4af37;
+    padding: 4px 10px; border-radius: 100px;
+    font-size: 0.78em; font-weight: 700; white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .nearby-card p {
+    color: rgba(232,232,239,0.8); font-size: 0.86em; line-height: 1.5;
+    margin-bottom: 10px; flex: 1;
+  }
+  .nearby-meta {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: auto; padding-top: 10px;
+    border-top: 1px dashed rgba(212,175,55,0.12);
+  }
+  .nearby-meta span {
+    background: rgba(255,255,255,0.04);
+    padding: 3px 9px; border-radius: 100px;
+    font-size: 0.74em; color: rgba(232,232,239,0.7);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .nearby-meta span.walk { color: #7eea9e; border-color: rgba(126,234,158,0.3); }
+  .nearby-meta span.time { color: #00d4ff; border-color: rgba(0,212,255,0.3); }
+  .nearby-meta span.price { color: #d4af37; border-color: rgba(212,175,55,0.3); }
+  .nearby-meta span.hours { color: #ffd97e; border-color: rgba(255,217,126,0.3); }
+  /* Категории цветовые схемы */
+  .nearby-card[data-cat="pharmacy"] { --cat-color: #7eea9e; --cat-bg: rgba(126,234,158,0.15); }
+  .nearby-card[data-cat="supermarket"] { --cat-color: #ffd97e; --cat-bg: rgba(255,217,126,0.15); }
+  .nearby-card[data-cat="cafe"] { --cat-color: #ffa97e; --cat-bg: rgba(255,169,126,0.15); }
+  .nearby-card[data-cat="restaurant"] { --cat-color: #ff8a8a; --cat-bg: rgba(255,138,138,0.15); }
+  .nearby-card[data-cat="atm"] { --cat-color: #00d4ff; --cat-bg: rgba(0,212,255,0.15); }
+  .nearby-card[data-cat="hospital"] { --cat-color: #ff6b6b; --cat-bg: rgba(255,107,107,0.15); }
+  .nearby-card[data-cat="mall"] { --cat-color: #a87ed4; --cat-bg: rgba(168,126,212,0.15); }
+  .nearby-card[data-cat="transport"] { --cat-color: #d4af37; --cat-bg: rgba(212,175,55,0.15); }
+  .nearby-card[data-cat="beach"] { --cat-color: #00d4ff; --cat-bg: rgba(0,212,255,0.15); }
+  .nearby-card[data-cat="attraction"] { --cat-color: #fff5b7; --cat-bg: rgba(255,245,183,0.15); }
+
+  /* Фильтр категорий */
+  .nearby-filter {
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+    margin-bottom: 18px;
+  }
+  .nearby-filter-btn {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(212,175,55,0.2);
+    color: rgba(232,232,239,0.7);
+    padding: 6px 14px; border-radius: 100px;
+    font-size: 0.82em; font-weight: 600; font-family: inherit;
+    cursor: pointer; transition: 0.3s;
+  }
+  .nearby-filter-btn:hover {
+    background: rgba(212,175,55,0.1); color: #d4af37;
+    border-color: rgba(212,175,55,0.4);
+  }
+  .nearby-filter-btn.active {
+    background: linear-gradient(135deg, #d4af37, #f5b700);
+    color: #0a0a14; border-color: transparent;
+  }
+  .nearby-card.hidden { display: none; }
 </style>
 </head>
 <body>
@@ -1754,7 +1867,7 @@
 <button aria-label="Показать все разделы" class="tab-btn tab-more" id="moreTrigger" role="button">☰ Ещё</button>
 </div>
 </div>
-<button aria-label="Поиск" class="search-trigger" id="searchTrigger" title="Поиск по сайту (Ctrl+K)">🔍<kbd>⌘K</kbd></button>
+<button aria-label="Поиск" class="search-trigger" id="searchTrigger" title="Поиск по сайту (Ctrl+K)">🔍<span class="kbd-text"><kbd>⌘K</kbd></span></button>
 </nav>
 <main>
 <!-- ==================== TAB 1: OVERVIEW ==================== -->
@@ -4106,6 +4219,418 @@
 
 <div class="panel-nav">
 <button aria-label="Предыдущая вкладка" class="panel-nav-btn prev" data-prev="map-hotel">Назад</button>
+<button aria-label="Следующая вкладка" class="panel-nav-btn next" data-next="nearby">Поблизости →</button>
+</div>
+</div>
+</div>
+</section>
+<!-- ==================== TAB 22: NEARBY (Поблизости) ==================== -->
+<section aria-labelledby="tab-nearby" class="tab-panel" data-panel="nearby" hidden="" id="panel-nearby" role="tabpanel">
+<div class="container">
+<div class="panel-section">
+<h2 class="section-title reveal">📍 Что рядом с отелем</h2>
+<p class="subtitle reveal">Аптеки, магазины, кафе, банкоматы, больницы — всё с расстоянием от SY Hotels Belek в километрах и минутах</p>
+
+<div class="weather-intro reveal">
+<h3>🗺 Как пользоваться</h3>
+<p>Все расстояния — от входа в SY Hotels Belek. Пешая скорость ~5 км/ч. На такси — быстрее, но учитывай пробки в сезон (июль-август). Кликай на фильтр категории, чтобы показать только нужное.</p>
+</div>
+
+<div class="nearby-filter reveal">
+<button class="nearby-filter-btn active" data-filter="all">Все</button>
+<button class="nearby-filter-btn" data-filter="pharmacy">💊 Аптеки</button>
+<button class="nearby-filter-btn" data-filter="supermarket">🛒 Магазины</button>
+<button class="nearby-filter-btn" data-filter="cafe">☕ Кафе</button>
+<button class="nearby-filter-btn" data-filter="restaurant">🍽 Рестораны</button>
+<button class="nearby-filter-btn" data-filter="atm">🏧 Банкоматы</button>
+<button class="nearby-filter-btn" data-filter="hospital">🏥 Больницы</button>
+<button class="nearby-filter-btn" data-filter="mall">🏬 ТЦ</button>
+<button class="nearby-filter-btn" data-filter="transport">🚌 Транспорт</button>
+<button class="nearby-filter-btn" data-filter="beach">🏖 Пляжи</button>
+<button class="nearby-filter-btn" data-filter="attraction">🎢 Достопримечательности</button>
+</div>
+
+<div class="nearby-grid">
+
+<div class="nearby-card reveal" data-cat="pharmacy" data-delay="1">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">💊</div>
+<div><h4>Eczane Kadriye</h4><span class="category">Аптека</span></div>
+</div>
+<div class="nearby-distance">1.2 км</div>
+</div>
+<p>Ближайшая аптека в Kadriye. Большой выбор, турецкие аналоги лекарств. Дежурная аптека работает ночью — узнай график на двери. Знак «E+» — круглосуточная.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 15 мин пешком</span>
+<span class="time">🚕 4 мин на такси</span>
+<span class="hours">⏰ 08:30-21:00</span>
+<span class="price">💰 наличные/карта</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="pharmacy" data-delay="2">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">💊</div>
+<div><h4>Belek Eczanesi</h4><span class="category">Аптека</span></div>
+</div>
+<div class="nearby-distance">0.8 км</div>
+</div>
+<p>Аптека в центре Belek. Удобно — ближе всего к отелю. Персонал говорит по-английски. Если нужного лекарства нет — подскажут ближайшую дежурную.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 10 мин пешком</span>
+<span class="time">🚕 3 мин на такси</span>
+<span class="hours">⏰ 09:00-22:00</span>
+<span class="price">💰 наличные/карта</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="supermarket" data-delay="3">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🛒</div>
+<div><h4>Migros Belek</h4><span class="category">Супермаркет</span></div>
+</div>
+<div class="nearby-distance">0.5 км</div>
+</div>
+<p>Самый большой супермаркет рядом. Вода, снеки, фрукты, алкоголь (после 18:00), средства гигиены. Принимает Visa/Mastercard казахстанских банков. Цены средние, качество отличное.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 6 мин пешком</span>
+<span class="time">🚕 2 мин на такси</span>
+<span class="hours">⏰ 08:00-22:00</span>
+<span class="price">💰 Visa/MC/KZ</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="supermarket" data-delay="4">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🛒</div>
+<div><h4>BIM Belek</h4><span class="category">Дискаунтер</span></div>
+</div>
+<div class="nearby-distance">0.7 км</div>
+</div>
+<p>Дискаунтер — самые низкие цены. Вода, снеки, базовые продукты. Алкоголь ограничен (пиво/вино). Только наличные или турецкие карты. Аналог «Пятёрочки».</p>
+<div class="nearby-meta">
+<span class="walk">🚶 9 мин пешком</span>
+<span class="time">🚕 3 мин на такси</span>
+<span class="hours">⏰ 08:30-21:00</span>
+<span class="price">💰 наличные/TRY</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="supermarket" data-delay="5">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🛒</div>
+<div><h4>A101 Market</h4><span class="category">Дискаунтер</span></div>
+</div>
+<div class="nearby-distance">0.9 км</div>
+</div>
+<p>Конкурент BIM. Хорошие цены на фрукты и овощи, отличный отдел бытовой химии. Только наличные или турецкие карты. Открыто допоздна.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 12 мин пешком</span>
+<span class="time">🚕 4 мин на такси</span>
+<span class="hours">⏰ 08:00-22:00</span>
+<span class="price">💰 наличные/TRY</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="cafe" data-delay="6">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">☕</div>
+<div><h4>Starbucks Belek</h4><span class="category">Кофейня</span></div>
+</div>
+<div class="nearby-distance">1.0 км</div>
+</div>
+<p>Знакомый вкус кофе, если устал от турецкого. Wi-Fi бесплатный, розетки у столиков. Хороший кондишн — можно поработать. Цены выше турецких кафе.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 13 мин пешком</span>
+<span class="time">🚕 4 мин на такси</span>
+<span class="hours">⏰ 08:00-23:00</span>
+<span class="price">💰 €3-5 за кофе</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="cafe" data-delay="7">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">☕</div>
+<div><h4>Coffee Lab Kadriye</h4><span class="category">Кофейня</span></div>
+</div>
+<div class="nearby-distance">1.3 км</div>
+</div>
+<p>Турецкая спешелти-кофейня. Свежеобжаренные зёрна, можно купить домой. Альтернативные способы заваривания (V60, эспрессо). Атмосферно, тихо.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 17 мин пешком</span>
+<span class="time">🚕 5 мин на такси</span>
+<span class="hours">⏰ 07:30-22:00</span>
+<span class="price">💰 ₺60-80 за кофе</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="restaurant" data-delay="8">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🍽</div>
+<div><h4>Mezze Restaurant</h4><span class="category">Турецкая кухня</span></div>
+</div>
+<div class="nearby-distance">0.6 км</div>
+</div>
+<p>Лучший турецкий ресторан в Belek. Мезе (закуски), кебабы, свежая рыба. Вид на сад. Семейный, уютно. Бронируйте столик вечером — популярное место.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 8 мин пешком</span>
+<span class="time">🚕 3 мин на такси</span>
+<span class="hours">⏰ 12:00-23:00</span>
+<span class="price">💰 ₺800-1500/чел</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="restaurant" data-delay="9">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🍽</div>
+<div><h4>Pidecim Belek</h4><span class="category">Пиде / пицца</span></div>
+</div>
+<div class="nearby-distance">0.4 км</div>
+</div>
+<p>Турецкая пиде («лодочка» с начинкой) — местный фастфуд. Дёшево, сытно, вкусно. Хороший выбор для обеда с детьми. На вынос — звонком заранее.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 5 мин пешком</span>
+<span class="time">🚕 2 мин на такси</span>
+<span class="hours">⏰ 11:00-22:00</span>
+<span class="price">💰 ₺150-250/чел</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="atm" data-delay="10">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🏧</div>
+<div><h4>Garanti BBVA ATM</h4><span class="category">Банкомат</span></div>
+</div>
+<div class="nearby-distance">0.5 км</div>
+</div>
+<p>Лучший банкомат для снятия наличных с казахстанских карт. Принимает Visa/Mastercard. Лимит съёмки — ₺5000 за раз. Без комиссии банка, только твоя.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 6 мин пешком</span>
+<span class="time">🚕 2 мин на такси</span>
+<span class="hours">⏰ 24/7</span>
+<span class="price">💰 Visa/MC</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="atm" data-delay="11">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🏧</div>
+<div><h4>İş Bankası ATM</h4><span class="category">Банкомат</span></div>
+</div>
+<div class="nearby-distance">0.8 км</div>
+</div>
+<p>Запасной банкомат в Kadriye. Работает 24/7, надёжный. Если Garanti не выдаёт — попробуй здесь. Курс конвертации обычно выгоднее, чем в обменниках.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 10 мин пешком</span>
+<span class="time">🚕 3 мин на такси</span>
+<span class="hours">⏰ 24/7</span>
+<span class="price">💰 Visa/MC</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="hospital" data-delay="12">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🏥</div>
+<div><h4>Memorial Belek Clinic</h4><span class="category">Частная клиника</span></div>
+</div>
+<div class="nearby-distance">1.5 км</div>
+</div>
+<p>Современная частная клиника. Англоговорящие врачи, страховка принимается. Скорая помощь 24/7. Качество — на европейском уровне. Позвони страховщику первым делом!</p>
+<div class="nearby-meta">
+<span class="walk">🚶 20 мин пешком</span>
+<span class="time">🚕 5 мин на такси</span>
+<span class="hours">⏰ 24/7</span>
+<span class="price">💰 страховка/€200-500</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="hospital" data-delay="13">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🏥</div>
+<div><h4>Serik State Hospital</h4><span class="category">Гос. больница</span></div>
+</div>
+<div class="nearby-distance">12 км</div>
+</div>
+<p>Государственная больница в Serik. Экстренная помощь бесплатно (страховка). Дольше очереди, менее комфортно, чем Memorial. Скорая 112 — бесплатная.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 слишком далеко</span>
+<span class="time">🚕 18 мин на такси</span>
+<span class="hours">⏰ 24/7</span>
+<span class="price">💰 страховка/бесплатно</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="mall" data-delay="14">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🏬</div>
+<div><h4>Belek City Center</h4><span class="category">Торговый центр</span></div>
+</div>
+<div class="nearby-distance">0.7 км</div>
+</div>
+<p>Маленький ТЦ в Belek. Магазины одежды, сувениры, ювелирные изделия, кафе. Цены выше рыночных — торгуйся! Хороший кондиционер, можно переждать жару.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 9 мин пешком</span>
+<span class="time">🚕 3 мин на такси</span>
+<span class="hours">⏰ 10:00-22:00</span>
+<span class="price">💰 ₺200-2000</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="mall" data-delay="15">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🏬</div>
+<div><h4>Terra City Mall</h4><span class="category">Большой ТЦ</span></div>
+</div>
+<div class="nearby-distance">30 км</div>
+</div>
+<p>Крупнейший ТЦ в регионе, в Antalya. 200+ магазинов, кинотеатр, фуд-корт. Zara, H&amp;M, Mango, LC Waikiki. Идеально для шопинга в непогоду. Доехать на долмуше или такси.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 слишком далеко</span>
+<span class="time">🚕 35 мин на такси</span>
+<span class="hours">⏰ 10:00-22:00</span>
+<span class="price">💰 €10-200</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="transport" data-delay="16">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🚌</div>
+<div><h4>Dolmuş Stop Kadriye</h4><span class="category">Остановка долмуша</span></div>
+</div>
+<div class="nearby-distance">1.0 км</div>
+</div>
+<p>Остановка долмуша (маршрутки) в Kadriye. Синие минибасы в сторону Antalya и Serik. Оплата при выходе водителю. Останавливаются по требованию — махни рукой.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 13 мин пешком</span>
+<span class="time">🚕 4 мин на такси</span>
+<span class="hours">⏰ 06:00-23:00</span>
+<span class="price">💰 ₺25-30</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="transport" data-delay="17">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🚕</div>
+<div><h4>Taxi Stand Belek</h4><span class="category">Стоянка такси</span></div>
+</div>
+<div class="nearby-distance">0.3 км</div>
+</div>
+<p>Ближайшая стоянка такси. Официальные жёлтые такси со счётчиком. Можно вызвать через приложение BiTaksi (турецкий Uber) — будет быстрее. До аэропорта ~₺1200.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 4 мин пешком</span>
+<span class="time">🚕 мгновенно</span>
+<span class="hours">⏰ 24/7</span>
+<span class="price">💰 ₺30 старт + ₺20/км</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="beach" data-delay="18">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🏖</div>
+<div><h4>Belek Public Beach</h4><span class="category">Пляж</span></div>
+</div>
+<div class="nearby-distance">2.0 км</div>
+</div>
+<p>Общественный пляж, куда отель возит шаттлом (каждые 4 минуты). Песок мелкий, заход пологий. Лежаки отеля — бесплатно. Зонты — тоже. Бары и кафе на пляже.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 25 мин пешком</span>
+<span class="time">🚕 4 мин шаттл / 5 мин такси</span>
+<span class="hours">⏰ 08:00-19:00</span>
+<span class="price">💰 бесплатно (для гостей)</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="beach" data-delay="19">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🏖</div>
+<div><h4>Kadriye Beach</h4><span class="category">Пляж</span></div>
+</div>
+<div class="nearby-distance">3.5 км</div>
+</div>
+<p>Альтернативный пляж в Kadriye. Менее людно, чем Belek Public. Хорошие пляжные клубы с музыкой и напитками. Доехать — на долмуше или такси. Лучше для пар без детей.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 45 мин пешком</span>
+<span class="time">🚕 8 мин на такси</span>
+<span class="hours">⏰ 09:00-20:00</span>
+<span class="price">💰 ₺100-200 шезлонг</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="attraction" data-delay="20">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">🎢</div>
+<div><h4>The Land of Legends</h4><span class="category">Парк аттракционов</span></div>
+</div>
+<div class="nearby-distance">0.7 км</div>
+</div>
+<p>Крупнейший парк аттракционов Турции — прямо напротив отеля! Аквапарк, дельфинарий, 5D-кинотеатр, Horror Coaster. Дети 10+ в восторге. Билеты дешевле онлайн.</p>
+<div class="nearby-meta">
+<span class="walk">🚶 9 мин пешком</span>
+<span class="time">🚕 3 мин на такси</span>
+<span class="hours">⏰ 10:00-22:00</span>
+<span class="price">💰 €35-50 билет</span>
+</div>
+</div>
+
+<div class="nearby-card reveal" data-cat="attraction" data-delay="21">
+<div class="nearby-header">
+<div class="nearby-title">
+<div class="nearby-icon">⛳</div>
+<div><h4>National Golf Club</h4><span class="category">Гольф-клуб</span></div>
+</div>
+<div class="nearby-distance">2.7 км</div>
+</div>
+<p>Известный гольф-клуб Belek. 18 лунок, премиум-поле. Аренда клюшек и карты — на месте. Уроки для новичков. Бронируйте заранее — особенно в сезон (октябрь-апрель).</p>
+<div class="nearby-meta">
+<span class="walk">🚶 35 мин пешком</span>
+<span class="time">🚕 7 мин на такси</span>
+<span class="hours">⏰ 07:00-19:00</span>
+<span class="price">💰 €80-150/game</span>
+</div>
+</div>
+
+</div>
+
+<div class="weather-intro reveal" style="margin-top: 28px;">
+<h3>🚶 Важные расстояния (шпаргалка)</h3>
+<p>Распечатай или сохрани в телефоне. Все — от входа в SY Hotels Belek.</p>
+</div>
+
+<div class="price-grid">
+<div class="price-item reveal"><span class="name">🚪 Ресепшен → Migros</span><span class="price">0.5 км / 6 мин</span></div>
+<div class="price-item reveal"><span class="name">🚪 Ресепшен → Belek Eczanesi</span><span class="price">0.8 км / 10 мин</span></div>
+<div class="price-item reveal"><span class="name">🚪 Ресепшен → Такси стоянка</span><span class="price">0.3 км / 4 мин</span></div>
+<div class="price-item reveal"><span class="name">🚪 Ресепшен → The Land of Legends</span><span class="price">0.7 км / 9 мин</span></div>
+<div class="price-item reveal"><span class="name">🚪 Ресепшен → Пляж (шаттл)</span><span class="price">2.0 км / 4 мин шаттл</span></div>
+<div class="price-item reveal"><span class="name">🚪 Ресепшен → Kadriye (рынок)</span><span class="price">3.0 км / 10 мин долмуш</span></div>
+<div class="price-item reveal"><span class="name">🚪 Ресепшен → Memorial клиника</span><span class="price">1.5 км / 5 мин такси</span></div>
+<div class="price-item reveal"><span class="name">🚪 Ресепшен → Аэропорт Antalya</span><span class="price">29 км / 44 мин такси</span></div>
+<div class="price-item reveal"><span class="name">🚪 Ресепшен → Antalya центр</span><span class="price">40 км / 55 мин такси</span></div>
+<div class="price-item reveal"><span class="name">🚪 Ресепшен → TerraCity Mall</span><span class="price">30 км / 35 мин такси</span></div>
+</div>
+
+<div class="panel-nav">
+<button aria-label="Предыдущая вкладка" class="panel-nav-btn prev" data-prev="photospots">Назад</button>
 <button aria-label="Конец" class="panel-nav-btn next" disabled="">Конец</button>
 </div>
 </div>
@@ -4160,6 +4685,7 @@
 <button class="more-item" data-tab="kids"><span class="icon">🛹</span><span>Подросткам 10-13</span></button>
 <button class="more-item" data-tab="map-hotel"><span class="icon">🗺️</span><span>Карта отеля</span></button>
 <button class="more-item" data-tab="photospots"><span class="icon">📷</span><span>Фото-точки</span></button>
+<button class="more-item" data-tab="nearby"><span class="icon">📍</span><span>Что рядом</span></button>
 <button class="more-item" data-tab="map"><span class="icon">📍</span><span>Карта Белека</span></button>
 <button class="more-item" data-tab="video"><span class="icon">🎥</span><span>Видео</span></button>
 </div>
@@ -4832,6 +5358,24 @@ document.querySelectorAll('.sub-tab').forEach(tab => {
   }
   attachFavButtons();
 
+  // ---------- 15b. Nearby filter ----------
+  document.querySelectorAll('.nearby-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Обновляем активную кнопку
+      document.querySelectorAll('.nearby-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      // Фильтруем карточки
+      document.querySelectorAll('.nearby-card').forEach(card => {
+        if (filter === 'all' || card.dataset.cat === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+
   // ---------- 15. Search modal ----------
   const searchTrigger = document.getElementById('searchTrigger');
   const searchModal = document.getElementById('searchModal');
@@ -4880,6 +5424,7 @@ document.querySelectorAll('.sub-tab').forEach(tab => {
     { e: '📰', t: 'Новости отеля', tab: 'news', d: 'Акции, награды, анимация 2026' },
     { e: '🗺️', t: 'Карта территории отеля', tab: 'map-hotel', d: 'Схема с маркерами: бассейны, ресторан, SPA' },
     { e: '📷', t: 'Фото-точки — где сделать лучшие кадры', tab: 'photospots', d: 'Топ-5 мест: Maldiv Pool, аквапарк, закат, swim-up, хаммам' },
+    { e: '📍', t: 'Что рядом с отелем', tab: 'nearby', d: 'Аптеки, магазины, кафе, банкоматы — с расстоянием в км' },
     { e: '🛹', t: 'Подросткам 10-13 лет', tab: 'kids', d: 'Экстрим-горки, спорт, вечеринки, самостоятельность' },
   ];
 
