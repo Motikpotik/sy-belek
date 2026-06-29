@@ -7,7 +7,7 @@
      - Прочее: network-first с fallback в кэш
    =================================================================== */
 
-const CACHE_VERSION = 'sy-belek-v7';
+const CACHE_VERSION = 'sy-belek-v8';
 const STATIC_CACHE  = `${CACHE_VERSION}-static`;
 const IMG_CACHE     = `${CACHE_VERSION}-images`;
 
